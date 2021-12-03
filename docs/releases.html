@@ -123,6 +123,8 @@
 <ul>
 <li><a href="#master-branch">Master branch</a></li>
 <li><a href="#version-4">Version 4</a><ul>
+<li><a href="#v440">v4.4.0</a></li>
+<li><a href="#v436">v4.3.6</a></li>
 <li><a href="#v434">v4.3.4</a></li>
 <li><a href="#v430">v4.3.0</a></li>
 <li><a href="#v422">v4.2.2</a></li>
@@ -229,6 +231,55 @@
 
 <h2 id="master-branch"><a class="toclink" href="#master-branch">Master branch</a></h2>
 <h2 id="version-4"><a class="toclink" href="#version-4">Version 4</a></h2>
+<h3 id="v440"><a class="toclink" href="#v440">v4.4.0</a></h3>
+<ul>
+<li><code>new</code> #1145 : Upgrade Composer and PHP Version<blockquote>
+<p><strong>Attention</strong>: Support for PHP &lt; 8 has been removed.</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #1152 : Fix diagnostics</li>
+<li><code>fixes</code> #1154 : Set configuration option <code>user_agent</code> during init.</li>
+</ul>
+<h3 id="v436"><a class="toclink" href="#v436">v4.3.6</a></h3>
+<ul>
+<li><code>fixes</code> #1059 : Add Cache busting.</li>
+<li><code>new</code> #1049 / <code>fixes</code> #1011 : New Photos Email Notification<blockquote>
+<ul>
+<li>Send an email when new photos were added to albums that have been shared.</li>
+<li>Use the laravel notification system to send via SMTP, <code>env</code> settings will need to be set up.</li>
+<li>It is set to send out emails once a week via cron, so the laravel cron job would need to be set up.</li>
+<li>Neither is required so if people don't want to set those up then it won't affect the operation of Lychee.</li>
+<li>Add admin setting to toggle the notification option, which enables a user level menu item to change their email. This is purely opt-in, so users can clear their email if they don't wish to receive the emails anymore.</li>
+<li>The email that gets sent out has been branded lychee, and will group the last week's worth of notifications and send them all out in one email to each user that has an email set up.</li>
+</ul>
+</blockquote>
+</li>
+<li><code>new</code> #1065 : Add Polish translation.</li>
+<li><code>new</code> #1071 : Avoid git rebase conflicts during development on other branches</li>
+<li><code>new</code> #1086 : cli sync from from server with option to delete, import via symlink, etc.</li>
+<li><code>new</code> #1097 : Make language more gender neutral.</li>
+<li><code>fixes</code> #1102 : Character limitation of table column logs.function causes server error 500 for deployments with long installation path</li>
+<li><code>fixes</code> #1105 : Fix type issues related to thumbs</li>
+<li><code>fixes</code> #1108 : Fixes takestamps.<blockquote>
+<ul>
+<li>This should correct all instances of incorrect album min/max takestamps and as a bonus be computationally much less expensive.</li>
+</ul>
+</blockquote>
+</li>
+<li><code>fixes</code> #1110 : <code>round</code> in php8 requires an <code>int</code> or <code>float</code> as the first argument.</li>
+<li><code>fixes</code> #1119 : No video upload when ffmpeg is missing</li>
+<li><code>new</code> #1122 : Improved French translations.</li>
+<li><code>fixes</code> #1121 : Fix lychee:video_data</li>
+<li><code>fixes</code> #1033 : A bit of JS to prevent multiple submissions of the migration form.</li>
+<li><code>fixes</code> #1127 : The upload_processing_limit parameter only works when uploading images in the admin account. It does not work for images uploaded by other users</li>
+<li><code>new</code> #1142 : also support Caps on size format in diagnostics.</li>
+<li><code>fixes</code> #1146 : <em>artisan optimize</em> crashes with <em>Unable to prepare route</em></li>
+<li><code>fixes</code> https://github.com/LycheeOrg/Lychee-front/pull/270: <em>Copy To...</em> didn't work correctly</li>
+<li><code>fixes</code> https://github.com/LycheeOrg/Lychee-front/issues/273: Wrong support of ' (single quote) in some places</li>
+<li><code>fixes</code> #1123: Album renaming did not work reliably</li>
+<li><code>new</code> https://github.com/LycheeOrg/Lychee-front/pull/276: Remember user preference for the visibility of the info sidebar</li>
+<li><code>fixes</code> https://github.com/LycheeOrg/Lychee-front/pull/278: Fix the menu for smart and tag albums and in public mode, fix import into top-level albums view, fix empty info sidebar for albums</li>
+</ul>
 <h3 id="v434"><a class="toclink" href="#v434">v4.3.4</a></h3>
 <p>Released Jul 11, 2021</p>
 <ul>
