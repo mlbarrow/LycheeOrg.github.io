@@ -146,6 +146,7 @@
 <li>Lychee's inbuilt SQLite3 support</li>
 </ul>
 </li>
+<li>Lychee 4.4.0 and later:<ul>
 <li>PHP &gt;= 8.0 with these PHP extensions:<ul>
 <li>BCMath</li>
 <li>Ctype</li>
@@ -161,6 +162,8 @@
 <li>Tokenizer</li>
 <li>XML</li>
 <li>ZIP</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -208,6 +211,7 @@ It contains a trimmed down version of the Lychee files.</p>
 <p>It is also strongly recommended to serve Lychee over TLS. You may wish to consider <a href="https://letsencrypt.org/">Let's Encrypt</a> for certificates and <a href="https://ssl-config.mozilla.org/">Mozilla's SSL Configuration Generator</a> for server configuration examples.</p>
 <h3 id="apache"><a class="toclink" href="#apache">Apache</a></h3>
 <p>Lychee includes a <code>public/.htaccess</code> file that is used to provide URLs without the <code>index.php</code> front controller in the path. Before serving Lychee with Apache, be sure to enable the <code>mod_rewrite</code> module so the <code>.htaccess</code> file will be honored by the server.</p>
+<p>Also check the Apache <a href="https://lycheeorg.github.io/docs/upgrade.html#using-apache">upgrade instructions</a> for required permissions in your /etc/apache2/sites-available/example.com.conf file.</p>
 <p>If the <code>.htaccess</code> file that ships with Lychee does not work with your Apache installation, try this alternative:</p>
 <pre><code>Options +FollowSymLinks -Indexes
 RewriteEngine On
