@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -167,19 +168,19 @@ Those are the versions where we accept vulnerability reports.</p>
 </tr>
 </tbody>
 </table>
-<p>If you discover a security vulnerability within Lychee, please contact us directly on <a href="https://gitter.im/LycheeOrg/Lobby">gitter</a>. All security vulnerabilities will be promptly addressed.</p>
+<p>If you discover a security vulnerability within Lychee, please contact us directly on <a href="https://gitter.im/LycheeOrg/Lobby">Gitter</a>. All security vulnerabilities will be promptly addressed.</p>
 <h2 id="core-development-discussion"><a class="toclink" href="#core-development-discussion">Core Development Discussion</a></h2>
 <p>You may propose new features or improvements of existing Lychee behavior in the <a href="https://github.com/LycheeOrg/Lychee/issues">issue board</a>. If you propose a new feature, please be willing to implement at least some of the code that would be needed to complete the feature.</p>
 <h2 id="how-to-properly-submit-a-pull-request-to-lychee"><a class="toclink" href="#how-to-properly-submit-a-pull-request-to-lychee">How to properly submit a pull-request to Lychee?</a></h2>
 <p>Pull request need to respect a few simple constraints described below which make the life of everyone easier.</p>
 <h3 id="which-branch-to-use"><a class="toclink" href="#which-branch-to-use">Which Branch to use?</a></h3>
 <p>When submitting a new feature or fixing a bug, please create a new branch from master:</p>
-<pre><code>git checkout master
+<pre><code class="language-bash">git checkout master
 git pull master
 git checkout -b &lt;fix-issue-number&gt;
 </code></pre>
 <p>Modify the desired files.</p>
-<pre><code>git add &lt;files-you-modified&gt;
+<pre><code class="language-bash">git add &lt;files-you-modified&gt;
 git commit -m &quot;&lt;mesage-of-what-is-going-on&gt;&quot;
 git push -u
 </code></pre>
@@ -188,21 +189,21 @@ git push -u
 <p>As you may have noticed already we have two repositories to manage separately the front-end and the back-end.
 This was necessary at times to ensure the parallel development of Lychee version 4 and Lychee version 3.
 As a result, the process of submitting a PR which modified both sides (Lychee-front and Lychee) goes as follows:</p>
-<ul>
-<li>1 &ndash; we take the 2 PR.</li>
-<li>2 &ndash; we review them both.</li>
-<li>3 &ndash; we merge on Lychee-front.</li>
-<li>4 &ndash; switch Lychee-front to master, rebuild &amp; commit on the Lychee PR.</li>
-<li>5 &ndash; merge to Lychee master</li>
-<li>6 &ndash; Enjoy!</li>
-</ul>
+<ol>
+<li>we take the 2 PR.</li>
+<li>we review them both.</li>
+<li>we merge on Lychee-front.</li>
+<li>switch Lychee-front to master, rebuild &amp; commit on the Lychee PR.</li>
+<li>merge to Lychee master</li>
+<li>Enjoy!</li>
+</ol>
 <h3 id="our-coding-style"><a class="toclink" href="#our-coding-style">Our Coding Style</a></h3>
 <p>In order to ease the review of pull requests we adopt a uniform code style. Our Continuous Integration suite will 
 fail if the later is not respected.</p>
 <h4 id="php"><a class="toclink" href="#php">PHP</a></h4>
 <p>Our coding style is defined by the <code>.php-ps</code> file, it is mostly the Symfony style but we use tabs instead of spaces.</p>
 <p>Before submitting a PR, we highly encourage you to do:</p>
-<pre><code>./vendor/bin/php-cs-fixer fix --config=.php_cs
+<pre><code class="language-bash">./vendor/bin/php-cs-fixer fix -v --config=.php-cs-fixer.php
 # or
 make formatting
 </code></pre>
@@ -211,12 +212,12 @@ make formatting
 <p>Our current configuration can be found <a href="https://github.com/LycheeOrg/Lychee/blob/master/.php_cs">here</a>.
 For details about the options you can have a look at the <a href="https://mlocati.github.io/php-cs-fixer-configurator">php-cs-fixer-configurator</a></p>
 <h4 id="javascript"><a class="toclink" href="#javascript">Javascript</a></h4>
-<p>Similarly to described above, you can format the code automatically with the command.</p>
-<pre><code>npm run format
+<p>Similarly to described above, you can format the code automatically with:</p>
+<pre><code class="language-bash">npm run format
 </code></pre>
 <h3 id="phpdoc"><a class="toclink" href="#phpdoc">PHPDoc</a></h3>
 <p>Below is an example of a valid Laravel documentation block. Note that the @param attribute is followed by two spaces, the argument type, two more spaces, and finally the variable name:</p>
-<pre><code>/**
+<pre><code class="language-php">/**
  * Register a binding with the container.
  *
  * @param  string|array  $abstract
@@ -235,37 +236,66 @@ public function bind($abstract, $concrete = null, $shared = false)
 This will increase the trust and safety of the code.</p>
 <h3 id="illustrated-example"><a class="toclink" href="#illustrated-example">Illustrated example</a></h3>
 <p>As follows we present a simple pull request modifying the <code>readme.md</code>.</p>
-<h4 id="1-fork-the-repository"><a class="toclink" href="#1-fork-the-repository">1. Fork the repository.</a></h4>
-<p><img alt="Screenshot" src="img/contribute1.png" /></p>
-<h4 id="2-select-your-own-account-as-destination-of-the-fork"><a class="toclink" href="#2-select-your-own-account-as-destination-of-the-fork">2. select your own account as destination of the fork.</a></h4>
-<p><img alt="Screenshot" src="img/contribute2.png" /></p>
-<h4 id="3-create-a-new-branch"><a class="toclink" href="#3-create-a-new-branch">3. Create a new branch.</a></h4>
 <ol>
+<li>Fork the repository.
+
+<p><img alt="Screenshot" src="img/contribute1.png" /></p>
+</li>
+
+<li>select your own account as destination of the fork.
+
+<p><img alt="Screenshot" src="img/contribute2.png" /></p>
+</li>
+
+<li>Create a new branch.
+
+<ol style="margin-left:1em">
 <li>Click on the drop down menu.</li>
 <li>Enter the name of the new branch.</li>
 <li>Click <strong>Create branch:...</strong>.</li>
 </ol>
+
 <p><img alt="Screenshot" src="img/contribute3.png" /></p>
-<h4 id="4-make-sure-the-new-branch-is-selected"><a class="toclink" href="#4-make-sure-the-new-branch-is-selected">4. Make sure the new branch is selected.</a></h4>
+</li>
+
+<li>Make sure the new branch is selected.
+
 <p><img alt="Screenshot" src="img/contribute4.png" /></p>
-<h4 id="5-edit-the-desired-files"><a class="toclink" href="#5-edit-the-desired-files">5. Edit the desired files.</a></h4>
+</li>
+
+<li>Edit the desired files.
+
 <p><img alt="Screenshot" src="img/contribute5.png" /></p>
-<h4 id="6-commit-the-changes"><a class="toclink" href="#6-commit-the-changes">6. Commit the changes.</a></h4>
-<p>If possible, provide a summary of the changes done by the commit in the description before clicking <strong>Commit changes</strong>.</p>
+</li>
+
+<li>Commit the changes.
+
+If possible, provide a summary of the changes done by the commit in the description before clicking <strong>Commit changes</strong>
+
 <p><img alt="Screenshot" src="img/contribute6.png" /></p>
-<h4 id="7-create-a-new-pull-request"><a class="toclink" href="#7-create-a-new-pull-request">7. Create a new pull request.</a></h4>
+</li>
+
+<li>Create a new pull request.
+
 <p><img alt="Screenshot" src="img/contribute7.png" /></p>
-<h4 id="8-fill-in-and-submit-the-pull-request"><a class="toclink" href="#8-fill-in-and-submit-the-pull-request">8. Fill-in and submit the pull request.</a></h4>
-<ol>
+</li>
+
+<li>Fill-in and submit the pull request.
+
+<ol style="margin-left:1em">
 <li>Make sure that the base repository is the one from <code>LycheeOrg</code> on the branch <code>master</code>.</li>
 <li>Provide a good title to the changes you would like to be applied.</li>
-<li>Add a description of the changes, motivations, what is being done. etc.
-Also make sure that <strong>Allow edit by the maintainers is being checked</strong>.
-This will allow us to fix the pull request if necessary.</li>
+<li>Add a description of the changes, motivations, what is being done etc. Also make sure that <strong>Allow edit by the maintainers is being checked</strong>This will allow us to fix the pull request if necessary.</li>
 <li>Submit the pull request.</li>
 </ol>
+
 <p><img alt="Screenshot" src="img/contribute8.png" /></p>
-<h4 id="9-wait-for-the-team-to-get-back-at-you-and-review-the-pr"><a class="toclink" href="#9-wait-for-the-team-to-get-back-at-you-and-review-the-pr">9. Wait for the team to get back at you and review the PR.</a></h4>
+</li>
+
+<li>Wait for the team to get back at you and review the PR.</li>
+
+</ol>
+
 <h2 id="code-of-conduct"><a class="toclink" href="#code-of-conduct">Code of Conduct</a></h2>
 <p>The Lychee code of conduct is the same as Laravel's code of conduct:</p>
 <ul>

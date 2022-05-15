@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -133,7 +134,7 @@
 This allowed us to easily develop the version 4 while having the version 3 still live.
 It also kept the consistency of the GUI between the two major versions.</p>
 <p>As a result you will find the front-end files in the <code>public/Lychee-front</code> directory after you initialized it as follows:</p>
-<pre><code>git submodule init
+<pre><code class="language-bash">git submodule init
 git submodule update
 </code></pre>
 <h3 id="dependencies"><a class="toclink" href="#dependencies">Dependencies</a></h3>
@@ -143,7 +144,7 @@ git submodule update
 <li><code>npm</code> <a href="https://www.npmjs.org">Node Packaged Modules</a></li>
 </ul>
 <p>After installing <a href="http://nodejs.org">Node.js</a> you can use the included <code>npm</code> package manager to download all dependencies:</p>
-<pre><code>npm install
+<pre><code class="language-bash">npm install
 </code></pre>
 <h3 id="build"><a class="toclink" href="#build">Build</a></h3>
 <p>The Gulpfile is located in <code>public/Lychee-front/</code> and can be executed using the <code>npm run compile</code> command.

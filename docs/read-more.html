@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -127,13 +128,13 @@
 
                             <hr> <h3 id="brief-introduction-to-laravel"><a class="toclink" href="#brief-introduction-to-laravel">Brief introduction to Laravel</a></h3>
 <p>Laravel is a MVC (Model-View-Controller) framework for PHP. Its process is as follows.</p>
-<ul>
-<li>1 &mdash; A Request is made, it goes through the routes.</li>
-<li>2 &mdash; The route decide which controller is being applied.<br>
+<ol>
+<li>A Request is made, it goes through the routes.</li>
+<li>The route decide which controller is being applied.<br>
 We apply a  middleware if requested (User Access verification mainly).</li>
-<li>3 &mdash; The controller makes calls to models which is hides the calls to the database through clever queries.</li>
-<li>4 &mdash; After applying logic, we return a view (template) or a JSON response.</li>
-</ul>
+<li>The controller makes calls to models which is hides the calls to the database through clever queries.</li>
+<li>After applying logic, we return a view (template) or a JSON response.</li>
+</ol>
 <p>The following figure illustrate the process.</p>
 <p><img alt="https://cdn.auth0.com/blog/laravel-auth/mvc-diagram.png" src="img/mvc-diagram.png" /></p>
 <p>A detailed description of the directory structure is provided <a href="structure.html">here</a>.</p>

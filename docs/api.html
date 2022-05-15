@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -217,9 +218,9 @@ See:</p>
 <ul>
 <li><strong>POST</strong> request</li>
 <li>Returns <code>true</code> if login was successful, <code>false</code> otherwise.</li>
-<li>Returns a laravel session cookie (<code>lychee_session</code>) which must be passed to subsequent requests that require an authenticated user.</li>
+<li>Returns a Laravel session cookie (<code>lychee_session</code>) which must be passed to subsequent requests that require an authenticated user.</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'username' =&gt; 'required',
     'password' =&gt; 'required',
 ]);
@@ -245,7 +246,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>read</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate(['albumID' =&gt; 'string|required']);
+<pre><code class="language-php">$request-&gt;validate(['albumID' =&gt; 'string|required']);
 </code></pre>
 <h3 id="apialbumgetpositiondata"><a class="toclink" href="#apialbumgetpositiondata"><code>/api/Album::getPositionData</code></a></h3>
 <ul>
@@ -256,7 +257,7 @@ See:</p>
 <ul>
 <li><strong>POST</strong> request</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumID' =&gt; 'string|required',
     'password' =&gt; 'string|nullable',
 ]);
@@ -266,7 +267,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'title' =&gt; 'string|required|max:100',
     'parent_id' =&gt; 'int|nullable',
 ]);
@@ -276,7 +277,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumIDs' =&gt; 'string|required',
     'title' =&gt; 'string|required|max:100',
 ]);
@@ -286,7 +287,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumID' =&gt; 'integer|required',
     'description' =&gt; 'string|nullable|max:1000',
 ]);
@@ -296,7 +297,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumID' =&gt; 'integer|required',
     'public' =&gt; 'integer|required',
     'visible' =&gt; 'integer|required',
@@ -310,7 +311,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumIDs' =&gt; 'string|required',
 ]);
 </code></pre>
@@ -320,7 +321,7 @@ See:</p>
 <li><em>upload</em> protection</li>
 <li>the first id is the destination, the following contains the merged albums.</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumIDs' =&gt; 'string|required',
 ]);
 </code></pre>
@@ -330,7 +331,7 @@ See:</p>
 <li><em>upload</em> protection</li>
 <li>the first id is the destination, the following contains the moved albums.</li>
 </ul>
-<pre><code>$request-&gt;validate(['albumIDs' =&gt; 'string|required']);
+<pre><code class="language-php">$request-&gt;validate(['albumIDs' =&gt; 'string|required']);
 </code></pre>
 <h3 id="apialbumsetlicense"><a class="toclink" href="#apialbumsetlicense"><code>/api/Album::setLicense</code></a></h3>
 <ul>
@@ -338,7 +339,7 @@ See:</p>
 <li><em>upload</em> protection</li>
 <li>License is one of the following: <code>none</code>, <code>reserved</code>, <code>CC0</code>, <code>CC-BY</code>, <code>CC-BY-ND</code>, <code>CC-BY-SA</code>, <code>CC-BY-ND</code>, <code>CC-BY-NC-ND</code>, <code>CC-BY-NC-SA</code></li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumID' =&gt; 'required|string',
     'license' =&gt; 'required|string',
 ]);
@@ -348,7 +349,7 @@ See:</p>
 <li><strong>GET</strong> request</li>
 <li><em>read</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumIDs' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -361,7 +362,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>read</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoID' =&gt; 'string|required',
 ]);
 </code></pre>
@@ -374,7 +375,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
     'title' =&gt; 'required|string|max:100',
 ]);
@@ -384,7 +385,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoID' =&gt; 'required|string',
     'description' =&gt; 'string|nullable',
 ]);
@@ -394,7 +395,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -403,7 +404,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoID' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -412,7 +413,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
     'albumID' =&gt; 'required|string',
 ]);
@@ -422,7 +423,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
     'tags' =&gt; 'string|nullable',
 ]);
@@ -433,7 +434,7 @@ See:</p>
 <li><em>upload</em> protection</li>
 <li>the <code>0</code> argument contains the file to upload.</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumID' =&gt; 'string|required',
     '0' =&gt; 'required',
 ]);
@@ -443,7 +444,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -452,7 +453,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
     'albumID' =&gt; 'string',
 ]);
@@ -463,7 +464,7 @@ See:</p>
 <li><em>upload</em> protection</li>
 <li>License is one of the following: <code>none</code>, <code>reserved</code>, <code>CC0</code>, <code>CC-BY</code>, <code>CC-BY-ND</code>, <code>CC-BY-SA</code>, <code>CC-BY-ND</code>, <code>CC-BY-NC-ND</code>, <code>CC-BY-NC-SA</code></li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoID' =&gt; 'required|string',
     'license' =&gt; 'required|string',
 ]);
@@ -474,7 +475,7 @@ See:</p>
 <li><em>read</em> protection</li>
 <li>Kind is one of the following: <code>FULL</code>, <code>LIVEPHOTOVIDEO</code>, <code>MEDIUM2X</code>, <code>MEDIUM</code>, <code>SMALL2X</code>, <code>SMALL</code>, <code>THUMB2X</code>, <code>THUMB</code></li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'photoIDs' =&gt; 'required|string',
     'kind' =&gt; 'nullable|string',
 ]);
@@ -494,7 +495,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'albumIDs' =&gt; 'string|required',
 ]);
 </code></pre>
@@ -503,7 +504,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'UserIDs' =&gt; 'string|required',
     'albumIDs' =&gt; 'string|required',
 ]);
@@ -513,7 +514,7 @@ See:</p>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'ShareIDs' =&gt; 'string|required',
 ]);
 </code></pre>
@@ -521,7 +522,7 @@ See:</p>
 <ul>
 <li><strong>POST</strong> request</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'username' =&gt; 'required|string',
     'password' =&gt; 'required|string',
 ]);
@@ -533,7 +534,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'url' =&gt; 'string|required',
     'albumID' =&gt; 'string|required',
 ]);
@@ -544,7 +545,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><em>admin</em> protection</li>
 <li>delete_imported takes value <code>0</code> or <code>1</code></li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'path' =&gt; 'string|required',
     'albumID' =&gt; 'int|required',
     'delete_imported' =&gt; 'int',
@@ -560,7 +561,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'id' =&gt; 'required',
     'username' =&gt; 'required|string|max:100',
     'upload' =&gt; 'required',
@@ -572,7 +573,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'id' =&gt; 'required',
 ]);
 </code></pre>
@@ -581,7 +582,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'username' =&gt; 'required|string|max:100',
     'password' =&gt; 'required|string|max:50',
     'upload' =&gt; 'required',
@@ -639,7 +640,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <ul>
 <li><strong>POST</strong> request</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'term' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -648,7 +649,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'typeAlbums' =&gt; 'required|string',
     'orderAlbums' =&gt; 'required|string',
     'typePhotos' =&gt; 'required|string',
@@ -660,7 +661,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'lang' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -669,7 +670,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'layout' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -678,7 +679,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'public_search' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -687,7 +688,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'image_overlay' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -696,7 +697,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'license' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -708,7 +709,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'map_display' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -717,7 +718,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'map_display_public' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -726,7 +727,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'map_provider' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -735,7 +736,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'map_include_subalbums' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -744,7 +745,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'location_decoding' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -753,7 +754,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'location_show' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -762,7 +763,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'location_show_public' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -771,7 +772,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate(['css' =&gt; 'nullable|string']);
+<pre><code class="language-php">$request-&gt;validate(['css' =&gt; 'nullable|string']);
 </code></pre>
 <h3 id="apisettingsgetall"><a class="toclink" href="#apisettingsgetall"><code>/api/Settings::getAll</code></a></h3>
 <ul>
@@ -783,7 +784,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>foreach (
+<pre><code class="language-php">foreach (
     $request-&gt;except([
         '_token', 'function', '/api/Settings::saveAll',
     ]) as $key =&gt; $value
@@ -797,7 +798,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'image_overlay_type' =&gt; 'required|string',
 ]);
 </code></pre>
@@ -806,7 +807,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<pre><code>$request-&gt;validate([
+<pre><code class="language-php">$request-&gt;validate([
     'key' =&gt; 'string|nullable',
 ]);
 </code></pre><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/api.md">Edit this page on Github!</a></p></blockquote>

@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -191,13 +192,13 @@
 It contains a trimmed down version of the Lychee files.</p>
 <h4 id="from-the-master-branch"><a class="toclink" href="#from-the-master-branch">From the Master branch</a></h4>
 <p>Lychee utilizes <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. Make sure you have Composer installed on your machine.</p>
-<pre><code>git clone https://www.github.com/LycheeOrg/Lychee /var/www/html/Lychee
+<pre><code class="language-bash">git clone https://www.github.com/LycheeOrg/Lychee /var/www/html/Lychee
 </code></pre>
 <p>Get into the directory:</p>
-<pre><code>cd /var/www/html/Lychee
+<pre><code class="language-bash">cd /var/www/html/Lychee
 </code></pre>
 <p>Install the required dependencies.</p>
-<pre><code>composer install --no-dev
+<pre><code class="language-bash">composer install --no-dev
 </code></pre>
 <p>If you want to help develop Lychee, install the development dependencies by removing the <code>--no-dev</code> or replacing it with --dev.</p>
 <h3 id="configuration"><a class="toclink" href="#configuration">Configuration</a></h3>
@@ -227,7 +228,7 @@ It contains a trimmed down version of the Lychee files.</p>
 <p>Lychee includes a <code>public/.htaccess</code> file that is used to provide URLs without the <code>index.php</code> front controller in the path. Before serving Lychee with Apache, be sure to enable the <code>mod_rewrite</code> module so the <code>.htaccess</code> file will be honored by the server.</p>
 <p>Also check the Apache <a href="https://lycheeorg.github.io/docs/upgrade.html#using-apache">upgrade instructions</a> for required permissions in your /etc/apache2/sites-available/example.com.conf file.</p>
 <p>If the <code>.htaccess</code> file that ships with Lychee does not work with your Apache installation, try this alternative:</p>
-<pre><code>Options +FollowSymLinks -Indexes
+<pre><code class="language-apacheconf">Options +FollowSymLinks -Indexes
 RewriteEngine On
 
 RewriteCond %{HTTP:Authorization} .
@@ -239,7 +240,7 @@ RewriteRule ^ index.php [L]
 </code></pre>
 <h3 id="nginx"><a class="toclink" href="#nginx">Nginx</a></h3>
 <p>This is a sample nginx server block. It does not include TLS, but covers the Lychee-specific requirements.</p>
-<pre><code>server {
+<pre><code class="language-nginx">server {
     listen 80;
     server_name &lt;mydomain&gt;.&lt;tld&gt;;
 

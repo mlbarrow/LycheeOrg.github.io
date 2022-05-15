@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -122,7 +123,7 @@
                             
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#schedule-releases-roadmap">Schedule releases &amp; Roadmap.</a></li>
+<li><a href="#schedule-releases-roadmap">Schedule releases &amp; Roadmap</a></li>
 <li><a href="#security">Security</a></li>
 <li><a href="#lycheeorg">LycheeOrg</a></li>
 </ul>
@@ -130,15 +131,15 @@
                             <hr> <h2 id="introduction"><a class="toclink" href="#introduction">Introduction</a></h2>
 <p>Lychee was originally developed by <a href="https://github.com/electerious">electerious</a> (<a href="https://electerious.com">Tobias Reich</a>). Lychee aims to be a great looking and easy-to-use photo-management-system that nearly anyone can use on their web server.</p>
 <p>Since April 1st, 2018 this project has moved to it's own Organisation (LycheeOrg) where people are able to submit their fixes to it. We, the Organisation owners, want to thank electerious (Tobias Reich) for the opportunity to make this project live on.</p>
-<h2 id="schedule-releases-roadmap"><a class="toclink" href="#schedule-releases-roadmap">Schedule releases &amp; Roadmap.</a></h2>
-<p>We do not have schedule for releases such as every 6 months. Our releases should never contain breaking changes. That being said, we do not provide backward compatibility or hotfix for older versions. The <code>master</code> branch is the bleeding edge of Lychee. It contains the latest bugfix and newest features. Once a sufficient number of hotfixes or new features has been merged into <code>master</code> we create a new release.</p>
+<h2 id="schedule-releases-roadmap"><a class="toclink" href="#schedule-releases-roadmap">Schedule releases &amp; Roadmap</a></h2>
+<p>We do not have schedule for releases such as every 6 months. Our releases should never contain breaking changes. That being said, we do not provide backward compatibility or hotfix for older versions. The <code>master</code> branch is the bleeding edge of Lychee. It contains the latest bugfixes and newest features. Once a sufficient number of hotfixes or new features has been merged into <code>master</code> we create a new release.</p>
 <h2 id="security"><a class="toclink" href="#security">Security</a></h2>
 <p>In order to ensure maximum security some actions on Lychee are restricted by an admin authentication. The username and password are stored hashed with bcrypt in the database.</p>
 <p>However as precaution, we provide a server-side command to easily erase those two data from the database in order to recover admin access. We consider this command safe as it requires a command line access to the server. A user gaining such rights is outside of our security scope as the server would be compromised.</p>
 <h2 id="lycheeorg"><a class="toclink" href="#lycheeorg">LycheeOrg</a></h2>
 <p>LycheeOrg is a GitHub organization of enthusiast developers determined to keep this project alive.
 There is no commitment in time to the project. We understand that each member has their personal life and dedicate time as they see fit to the project.</p>
-<p>If you start to contribute by opening multiple Pull Requests and adding more code to the database. It is likely you will be asked to join us.</p>
+<p>If you start to contribute by opening multiple Pull Requests and adding more code to the database, it is likely you will be asked to join us.</p>
 <p>There is no governance model. We currently have three admins: <a href="https://github.com/d7415">d4715</a>, <a href="https://github.com/ildyria">ildyria</a>, <a href="https://github.com/LudovicRousseau">LudovicRousseau</a>. Decisions are made after discussions.</p><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/org.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>

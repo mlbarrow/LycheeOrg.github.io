@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png"> -->
-    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png"> -->
     <!-- <link rel="manifest" href="/img/favicon/site.webmanifest"> -->
@@ -21,18 +21,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Load fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/ins2wgm.css">
+    <link rel="stylesheet" href="css/typekit/ins2wgm.css">
 
     <!-- Load styles -->
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/prism.css">
 
     <!-- Load JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="js/vendor/require.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/prism.js"></script>
 
 </head>
 
-<body class="language-php">
+<body>
 
     <div class="sidebar_layout" id="docsScreen">
 
@@ -40,7 +41,7 @@
             <div class="contain">
                 <aside class="sidebar">
                     <a href="../" class="logo">
-                        <img class="mark" src="img/logo.png" alt="Laravel">
+                        <img class="mark" src="/assets/images/logo.png" alt="Laravel">
                         <img class="type" src="img/Lychee.png" alt="Laravel">
                     </a>
                     <nav>
@@ -142,13 +143,13 @@ You can display installed PHP extensions using <code>phpinfo()</code>.</p>
               |- &lt;you are here&gt;
 </code></pre>
 <p>Rename Lychee into Lychee-v3:</p>
-<pre><code>mv Lychee Lychee-v3
+<pre><code class="language-bash">mv Lychee Lychee-v3
 </code></pre>
 <p>Install Lychee files by either uploading the content of the released zip or cloning the repository:</p>
-<pre><code>git clone https://github.com/LycheeOrg/Lychee Lychee
+<pre><code class="language-bash">git clone https://github.com/LycheeOrg/Lychee Lychee
 </code></pre>
 <p>Move the pictures from the version 3 to the newly created installation:</p>
-<pre><code>mv Lychee-v3/uploads/big/* Lychee/public/uploads/big/
+<pre><code class="language-bash">mv Lychee-v3/uploads/big/* Lychee/public/uploads/big/
 mv Lychee-v3/uploads/medium/* Lychee/public/uploads/medium/
 mv Lychee-v3/uploads/small/* Lychee/public/uploads/small/
 mv Lychee-v3/uploads/thumb/* Lychee/public/uploads/thumb/
@@ -164,14 +165,14 @@ mv Lychee-v3/uploads/thumb/* Lychee/public/uploads/thumb/
 <h3 id="using-apache"><a class="toclink" href="#using-apache">Using Apache</a></h3>
 <p><strong>Make sure you have the module rewrite available and enabled: <code>a2enmod rewrite</code></strong>.</p>
 <p>Modify your <code>/etc/apache2/apache2.conf</code> to allow <code>.htaccess</code> to set up the rewrite rules:</p>
-<pre><code>&lt;Directory /var/www/html/Lychee&gt;
+<pre><code class="language-apacheconf">&lt;Directory /var/www/html/Lychee&gt;
     Options Indexes FollowSymLinks
     AllowOverride All
     Require all granted
 &lt;/Directory&gt;
 </code></pre>
 <p>Modify or create <code>example.com.conf</code> in <code>/etc/apache2/sites-available/</code> to point out the served directory:</p>
-<pre><code>&lt;VirtualHost *:80&gt;
+<pre><code class="language-apacheconf">&lt;VirtualHost *:80&gt;
     ServerName example.com
 
     DocumentRoot /var/www/html/Lychee/public
@@ -181,10 +182,10 @@ mv Lychee-v3/uploads/thumb/* Lychee/public/uploads/thumb/
 &lt;/VirtualHost&gt;
 </code></pre>
 <p>Enable the site:</p>
-<pre><code>a2ensite `example.com.conf`
+<pre><code class="language-bash">a2ensite `example.com.conf`
 </code></pre>
 <p>Restart apache2:</p>
-<pre><code>systemctl restart apache2
+<pre><code class="language-bash">systemctl restart apache2
 </code></pre>
 <p>Process with the </p>
 <h3 id="using-nginx"><a class="toclink" href="#using-nginx">Using Nginx</a></h3>
