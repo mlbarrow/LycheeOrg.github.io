@@ -138,6 +138,8 @@
 <li><a href="#how-to-reset-username-and-password">How to reset username and password?</a></li>
 <li><a href="#how-to-hide-smart-albums">How to hide smart albums?</a></li>
 <li><a href="#how-to-disable-the-zoom-animation-while-browsing-pictures">How to disable the 'zoom' animation while browsing pictures?</a></li>
+<li><a href="#how-to-use-a-custom-font-on-the-landing-page">How to use a custom font on the landing page?</a></li>
+<li><a href="#how-to-add-custom-scripts">How to add custom scripts?</a></li>
 <li><a href="#how-is-the-upload-folder-protected">How is the upload folder protected?</a></li>
 <li><a href="#my-login-is-timing-out-after-two-hours-how-can-this-be-changed">My login is timing out after two hours, how can this be changed?</a></li>
 <li><a href="#how-can-i-clear-the-logs">How can I clear the Logs?</a></li>
@@ -237,6 +239,86 @@ div.content &gt; div.divider:nth-child(6) {
   animation-duration: 0 !important;
 }
 </code></pre>
+<h3 id="how-to-use-a-custom-font-on-the-landing-page"><a class="toclink" href="#how-to-use-a-custom-font-on-the-landing-page">How to use a custom font on the landing page?</a></h3>
+<p>In order to use a specific font on the landing page which does not rely on some font provided by the client-side browser, you have two options:</p>
+<ol>
+<li>self-host the necessary set of font files as part of your Lychee installation</li>
+<li>use an external font-hosting service such as Google Fonts</li>
+</ol>
+<p>Both options require to tweak the custom <code>user.css</code> via the settings menu.</p>
+<h4 id="option-1-self-hosted-font-files"><a class="toclink" href="#option-1-self-hosted-font-files">Option 1: Self-hosted font files</a></h4>
+<p>Let's assume that your favorite font is called <code>My Font</code>. You need a set of the font files in WOFF2 format with one font file per used font weight and style. The landing page uses 5 different font weights (200 = thin, 300 = light, 400 = normal, 500 = thick, 700 = bold) all in normal (i.e. upright) style.</p>
+<p>The necessary CSS consists of two parts: firstly, the font face and its different weights are declared via the <code>@font-face</code>-directive; secondly, the declared font needs to be used by the styles for the page. A template CSS code for <code>user.css</code> looks like this.</p>
+<pre><code class="language-css">@font-face {
+    font-family: &quot;My Font&quot;;
+    font-style: normal;
+    font-weight: 200;
+    src: local(&quot;&quot;), url(&quot;&lt;font URL for weight 200&gt;&quot;) format(&quot;woff2&quot;);
+}
+@font-face {
+    font-family: &quot;My Font&quot;;
+    font-style: normal;
+    font-weight: 300;
+    src: local(&quot;&quot;), url(&quot;&lt;font URL for weight 300&gt;&quot;) format(&quot;woff2&quot;);
+}
+@font-face {
+    font-family: &quot;My Font&quot;;
+    font-style: normal;
+    font-weight: 400;
+    src: local(&quot;&quot;), url(&quot;&lt;font URL for weight 400&gt;&quot;) format(&quot;woff2&quot;);
+}
+@font-face {
+    font-family: &quot;My Font&quot;;
+    font-style: normal;
+    font-weight: 500;
+    src: local(&quot;&quot;), url(&quot;&lt;font URL for weight 500&gt;&quot;) format(&quot;woff2&quot;);
+}
+@font-face {
+    font-family: &quot;My Font&quot;;
+    font-style: normal;
+    font-weight: 700;
+    src: local(&quot;&quot;), url(&quot;&lt;font URL for weight 700&gt;&quot;) format(&quot;woff2&quot;);
+}
+
+#logo h1 span,
+#logo h1,
+#intro,
+.menu .menu-item {
+    font-family: &quot;My Font&quot;, sans-serif !important;
+}
+</code></pre>
+<h4 id="option-2-using-an-external-font-hosting-service"><a class="toclink" href="#option-2-using-an-external-font-hosting-service">Option 2: Using an external font-hosting service</a></h4>
+<p>If you want to use an external font-hosting service, replace the <code>@font-face</code> blocks of the template above with an <code>@import</code>-directive which points to the externally hosted font. The name of the font-family must be replaced by the font name as documented by the external font-service.
+For example, let's assume you want use Google's Nunito font. Then the CSS has to look like</p>
+<pre><code class="language-css">@import url(&quot;https://fonts.googleapis.com/css?family=Nunito:200,300,400,500,700&quot;);
+#logo h1 span,
+#logo h1,
+#intro,
+.menu .menu-item {
+    font-family: &quot;Nunito&quot;, sans-serif !important;
+}
+</code></pre>
+<p>You also have to change the CSP (Content Security Policy) to allow loading fonts from the external server. Therefore, add the following to the <code>csp</code> array in <code>config/secure-headers.php</code> (for example, below the <code>sandbox</code> line, one of the last lines in this file):</p>
+<pre><code class="language-php">        'style-src' =&gt; [
+            'allow' =&gt; [
+                'https://fonts.googleapis.com',
+            ],
+            'nonces' =&gt; [],
+            'self' =&gt; true,
+            'unsafe-inline' =&gt; true,
+            'report-sample' =&gt; true,
+            'add-generated-nonce' =&gt; false,
+        ],
+        'font-src' =&gt; [
+            'allow' =&gt; [
+                'https://fonts.gstatic.com',
+            ],
+            'self' =&gt; true,
+        ],
+</code></pre>
+<p>Change the URLs <code>https://fonts.googleapis.com</code> and <code>https://fonts.gstatic.com</code> to match your provider's URLs.</p>
+<h3 id="how-to-add-custom-scripts"><a class="toclink" href="#how-to-add-custom-scripts">How to add custom scripts?</a></h3>
+<p>If you want to add custom scripts, for example to add an analytics service, you can add the script code to the <code>additional_footer_text</code> setting. For example, adding <code>&lt;script&gt;alert('Hello World!');&lt;/script&gt;</code> to it will display an alert dialog with <code>Hello World!</code> in it every time you load the page.</p>
 <h3 id="how-is-the-upload-folder-protected"><a class="toclink" href="#how-is-the-upload-folder-protected">How is the upload folder protected?</a></h3>
 <p>From <a href="https://github.com/LycheeOrg/Lychee/issues/304">#304</a></p>
 <p>Short version: It's not protected</p>
