@@ -78,32 +78,7 @@
 </ul>
 
                                     <li class="laravel">
-                                        <h2>Laravel Basics</h2>
-                                        <ul>
-                                            <li><a href="http://laravel.com/docs/7.x/routing">Routing</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/middleware">Middleware</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/csrf">CSRF Protection</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/controllers">Controllers</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/requests">Requests</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/responses">Responses</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/views">Views</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/urls">URL Generation</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/session">Session</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/validation">Validation</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/errors">Error Handling</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/logging">Logging</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="laravel">
-                                        <h2>Laravel Database</h2>
-                                        <ul>
-                                            <li><a href="http://laravel.com/docs/7.x/database">Getting Started</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/queries">Query Builder</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/pagination">Pagination</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/migrations">Migrations</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/seeding">Seeding</a></li>
-                                            <li><a href="http://laravel.com/docs/7.x/redis">Redis</a></li>
-                                        </ul>
+                                        <a href="https://laravel.com/docs/8.x"><h2>Laravel<img style="margin-left:4px;" src="img/external-link.svg" /></h2></a>
                                     </li>
                                 </ul>
                             </div>
@@ -203,28 +178,39 @@ It contains a trimmed down version of the Lychee files.</p>
 </code></pre>
 <p>If you want to help develop Lychee, install the development dependencies by removing the <code>--no-dev</code> or replacing it with <code>--dev</code>.</p>
 <h3 id="configuration"><a class="toclink" href="#configuration">Configuration</a></h3>
-<h4 id="public-directory"><a class="toclink" href="#public-directory">Public Directory</a></h4>
-<p>After installing Lychee, configure your web server's root to be the <code>public</code> directory. The <code>index.php</code> in this directory serves as the interface for all HTTP requests to Lychee's API. Note that the <code>.env</code> file should <strong>not</strong> be exposed online as it contains the encryption key used for cookies as well as database credentials.</p>
-<h4 id="configuration-files"><a class="toclink" href="#configuration-files">Configuration Files</a></h4>
-<p>All of the configuration files for Lychee are stored in the <code>config</code> directory. Each option is documented, so feel free to look through the files and get familiar with the options available to you.</p>
 <h4 id="directory-permissions"><a class="toclink" href="#directory-permissions">Directory Permissions</a></h4>
-<p>After installing Lychee, you need to configure some permissions. Directories within the <code>storage</code> and the <code>bootstrap/cache</code> directories should be writable by your web server or Lychee will not run. Additionaly <code>public/uploads</code>, <code>public/dist</code> and <code>public/sym</code> need to be writable to upload files, customise the CSS and utilise <a href="https://lycheeorg.github.io/docs/settings.html#symbolic-link">symbolic links</a> respectively.</p>
-<h4 id="copy-configuration-file"><a class="toclink" href="#copy-configuration-file">Copy configuration file</a></h4>
-<p>If you have not copied the <code>.env.example</code> file to a new file named <code>.env</code>, you should do that now.</p>
-<h4 id="application-key"><a class="toclink" href="#application-key">Application Key</a></h4>
-<p>The next thing you should do after installing Lychee is set your application key to a random string. This is easily done by using the <code>php artisan key:generate</code> command.</p>
-<p>If you don't want to use this command and set the key yourself, this string should be 32 characters long and can be set in the <code>.env</code> environment file.</p>
-<p><strong>If the application key is not set, your user sessions and other encrypted data will not be secure!</strong></p>
-<h4 id="additional-configuration"><a class="toclink" href="#additional-configuration">Additional Configuration</a></h4>
-<p>Lychee needs almost no other configuration out of the box. You are free to get started developing! However, you may wish to review the <code>config/app.php</code> file and its documentation. It contains some options that aren't included from <code>.env</code> that you may wish to change according to your installation.</p>
-<p>You may also want to configure a few additional components of Lychee in <code>.env</code>, such as:</p>
+<p>Directories within the <code>storage</code> and the <code>bootstrap/cache</code> directories must be writable by your web server or Lychee will not run. Additionally, <code>public/uploads</code>, <code>public/dist</code> and <code>public/sym</code> need to be writable to upload files, customise the CSS and utilise <a href="https://lycheeorg.github.io/docs/settings.html#symbolic-link">symbolic links</a> respectively.</p>
+<h4 id="application-settings"><a class="toclink" href="#application-settings">Application Settings</a></h4>
+<p>The main directory should contain a <code>.env</code> file.
+Normally, Composer will have copied this file for you while installing the dependencies.
+If the <code>.env</code> file does not exist, then you should copy <code>.env.example</code> to a new file named <code>.env</code> now.
+Note that the <code>.env</code> file should <strong>not</strong> be exposed online as it contains the encryption key used for cookies as well as database credentials.</p>
+<h5 id="application-key"><a class="toclink" href="#application-key">Application Key</a></h5>
+<p>The <code>.env</code> file contains the setting <code>APP_KEY</code> which holds your application key.
+Normally, Composer sets this key for you while installing the dependencies.
+If the key is not set, Lychee will not work. Then, you can use the <code>php artisan key:generate</code> command to set the application key to a random value.</p>
+<h5 id="url"><a class="toclink" href="#url">URL</a></h5>
+<p>The variable <code>APP_URL</code> inside <code>.env</code> must be set to the external URL by which the <code>public/</code> folder is accessible.
+This setting must match the configuration of your web server (see below).</p>
+<h5 id="additional-configuration"><a class="toclink" href="#additional-configuration">Additional Configuration</a></h5>
+<p>The default <code>.env</code> file provides usable settings out of the box.</p>
+<p>You may want to configure a few additional components of Lychee, such as:</p>
 <ul>
 <li>Cache</li>
 <li>Database</li>
 <li>Session</li>
 </ul>
+<p>They are documented in the <code>.env.example</code> file, which may have been copied into your <code>.env</code>. They are also listed on the <a href="configuration.html">configuration</a> page.</p>
+<h5 id="advanced-configuration-dangerous"><a class="toclink" href="#advanced-configuration-dangerous">Advanced Configuration (Dangerous)</a></h5>
+<p>Some advanced options cannot be configured through the <code>.env</code> file. If you really need to change them, look in the <code>config/</code> directory.</p>
+<p><strong>If you don't know what they're doing, do not change them.</strong></p>
 <h2 id="web-server-configuration"><a class="toclink" href="#web-server-configuration">Web Server Configuration</a></h2>
 <h3 id="general"><a class="toclink" href="#general">General</a></h3>
+<p>Configure your web server to make the <code>public</code> directory accessible via a URL. This could be the root of your web server (short and convenient) or, if you prefer, a subpath such as <code>photos</code>. The <code>index.php</code> in this directory serves as the interface for all HTTP requests to Lychee's API.
+The configuration option <code>APP_URL</code> of Lychee must be set accordingly (see above).</p>
+<blockquote>
+<p>{note} Do not expose the top level directory of Lychee with your web server! This would allow public access to internal files like the application code and the <code>.env</code> file which contains sensitive information like the database credentials!</p>
+</blockquote>
 <p>It is also strongly recommended to serve Lychee over TLS. You may wish to consider <a href="https://letsencrypt.org/">Let's Encrypt</a> for certificates and <a href="https://ssl-config.mozilla.org/">Mozilla's SSL Configuration Generator</a> for server configuration examples.</p>
 <h3 id="apache"><a class="toclink" href="#apache">Apache</a></h3>
 <p>Lychee includes a <code>public/.htaccess</code> file that is used to provide URLs without the <code>index.php</code> front controller in the path. Before serving Lychee with Apache, be sure to enable the <code>mod_rewrite</code> module so the <code>.htaccess</code> file will be honored by the server.</p>
@@ -242,7 +228,7 @@ RewriteRule ^ index.php [L]
 </code></pre>
 <h3 id="nginx"><a class="toclink" href="#nginx">nginx</a></h3>
 <p>This is a sample nginx server block. It does not include TLS, but covers the Lychee-specific requirements.
-If you would like to serve from a subdirectory, take a look at <a href="https://lycheeorg.github.io/docs/faq.html#can-i-host-lychee-with-a-subpath-with-nginx-like-httpsexampledevlychee">the FAQ</a></p>
+If you would like to serve from a subdirectory, take a look at <a href="https://lycheeorg.github.io/docs/faq.html#can-i-host-lychee-with-a-subpath-with-nginx-like-httpsexampledevlychee">the FAQ</a>.</p>
 <pre><code class="language-nginx">server {
     listen 80;
     server_name &lt;mydomain&gt;.&lt;tld&gt;;
