@@ -102,6 +102,7 @@
 <li><a href="#preparing-the-server">Preparing the server</a><ul>
 <li><a href="#using-apache">Using Apache</a></li>
 <li><a href="#using-nginx">Using Nginx</a></li>
+<li><a href="#run-the-migrations">Run the migrations</a></li>
 </ul>
 </li>
 </ul>
@@ -164,7 +165,9 @@ mv Lychee-v3/uploads/thumb/* Lychee/public/uploads/thumb/
 </code></pre>
 <p>Process with the </p>
 <h3 id="using-nginx"><a class="toclink" href="#using-nginx">Using Nginx</a></h3>
-<p>If you are using Nginx, an example configuration can be found <a href="installation.html#web-server-configuration">here</a>.</p><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/upgrade.md">Edit this page on Github!</a></p></blockquote>
+<p>If you are using Nginx, an example configuration can be found <a href="installation.html#web-server-configuration">here</a>.</p>
+<h3 id="run-the-migrations"><a class="toclink" href="#run-the-migrations">Run the migrations</a></h3>
+<p>Make sure you have <code>DB_OLD_LYCHEE_PREFIX</code> set in your <code>.env</code> to correspond the table prefix of your old database, then run <code>php artisan migrate</code>. </p><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/upgrade.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>
                 </section>

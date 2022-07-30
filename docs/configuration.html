@@ -97,7 +97,17 @@
                             <h1>Configuration</h1>
                             
 <ul>
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#base-options">Base options</a></li>
+<li><a href="#database-options">Database options</a></li>
+<li><a href="#mailer-options">Mailer options</a></li>
+<li><a href="#cache-options">Cache options</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#session-and-security-options">Session and security options</a></li>
+<li><a href="#development-options">Development options</a></li>
+<li><a href="#advanced-configuration">Advanced configuration</a></li>
+</ul>
+</li>
 <li><a href="#environment-configuration">Environment Configuration</a><ul>
 <li><a href="#environment-variable-types">Environment Variable Types</a></li>
 <li><a href="#retrieving-environment-configuration">Retrieving Environment Configuration</a></li>
@@ -108,14 +118,597 @@
 <li><a href="#accessing-configuration-values">Accessing Configuration Values</a></li>
 <li><a href="#configuration-caching">Configuration Caching</a></li>
 <li><a href="#maintenance-mode">Maintenance Mode</a></li>
-<li><a href="#configuration-options">Configuration options</a><ul>
-<li><a href="#advanced-configuration-options">Advanced configuration options</a></li>
-</ul>
-</li>
 </ul>
 
                             <hr> <h2 id="introduction"><a class="toclink" href="#introduction">Introduction</a></h2>
-<p>All of the configuration files for Lychee are stored in the config directory. Each option is documented, so feel free to look through the files and get familiar with the options available to you.</p>
+<p>Lychee's core configuration is managed using a <code>.env</code> file. It probably exists already in your directory, but if not it can be created by copying <code>.env.example</code>. The options which are already included in the <code>.env</code> file should be sufficient to cover the necessary configuration for the vast majority of all use-cases and setups. Using other options than those included in the <code>.env</code> file should rarely be necessary. However, this page contains a more complete list of the available options, incl. some highly advanced ones, together with descriptions and default values.
+For non-core options (for example UI options), take a look at <a href="https://lycheeorg.github.io/docs/settings.html">Settings</a>.</p>
+<h3 id="base-options"><a class="toclink" href="#base-options">Base options</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APP_NAME</code></td>
+<td>The gallery name</td>
+<td><code>Lychee</code></td>
+</tr>
+<tr>
+<td><code>APP_ENV</code></td>
+<td>Environment of your gallery, <code>production</code> or <code>development</code></td>
+<td><code>production</code></td>
+</tr>
+<tr>
+<td><code>APP_URL</code></td>
+<td>The URL of your gallery (which resolves to the <code>public/</code> folder)</td>
+<td><code>http://localhost</code></td>
+</tr>
+<tr>
+<td><code>APP_KEY</code></td>
+<td>Your app key which is used for encryption (set during installation)</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>TIMEZONE</code></td>
+<td>The timezone of your photos, requires a named timezone identifier like <code>Europe/Paris</code>, don't use an offset (<code>+01:00</code>) or an abbreviation (<code>CEST</code>)</td>
+<td>system timezone of server</td>
+</tr>
+<tr>
+<td><code>LYCHEE_UPLOADS</code></td>
+<td>Path to uploads directory</td>
+<td><code>uploads/</code> inside <code>public/</code></td>
+</tr>
+<tr>
+<td><code>LYCHEE_UPLOADS_URL</code></td>
+<td>URL to uploads directory</td>
+<td><code>uploads/</code></td>
+</tr>
+<tr>
+<td><code>TRUSTED_PROXIES</code></td>
+<td>Trusted proxy IP addresses</td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="database-options"><a class="toclink" href="#database-options">Database options</a></h3>
+<p>Lychee supports MySQL/MariaDB, SQLite and PostgreSQL as database backends. Microsoft SQL Server can be used, but is unsupported. The configuration is managed using the <code>DB_</code> variables.</p>
+<h4 id="database_url"><a class="toclink" href="#database_url"><code>DATABASE_URL</code></a></h4>
+<p>Some hosting providers give you a single URL containing all the information needed to configure your database. Therefore, Lychee has a <code>DATABASE_URL</code> option which only needs the database connection type. For example:</p>
+<pre><code class="language-ini">DB_CONNECTION=mysql
+DATABASE_URL=&quot;mysql://root:password@127.0.0.1/forge?charset=UTF-8&quot;
+</code></pre>
+<p>If this applies to your hosting provider, you can skip the other DB configuration steps.</p>
+<h4 id="mysqlmariadb"><a class="toclink" href="#mysqlmariadb">MySQL/MariaDB</a></h4>
+<p>The configuration is exactly the same for both systems.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Value it should have</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DB_CONNECTION</code></td>
+<td><code>mysql</code></td>
+</tr>
+<tr>
+<td><code>DB_HOST</code></td>
+<td>Host of the database server (if it's running on the same server use <code>127.0.0.1</code>)</td>
+</tr>
+<tr>
+<td><code>DB_PORT</code></td>
+<td>Port of the database server (default 3306)</td>
+</tr>
+<tr>
+<td><code>DB_DATABASE</code></td>
+<td>The name of the database</td>
+</tr>
+<tr>
+<td><code>DB_USERNAME</code></td>
+<td>Username of the database user</td>
+</tr>
+<tr>
+<td><code>DB_PASSWORD</code></td>
+<td>Password of the database user</td>
+</tr>
+<tr>
+<td><code>DB_SOCKET</code></td>
+<td>UNIX socket to DB server, replaces <code>DB_HOST</code> and <code>DP_PORT</code></td>
+</tr>
+<tr>
+<td><code>MYSQL_ATTR_SSL_CA</code></td>
+<td>Optional and only used when using the <code>pdo_mysql</code> extension, file path to the SSL certificate authority</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sqlite"><a class="toclink" href="#sqlite">SQLite</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Value it should have</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DB_CONNECTION</code></td>
+<td><code>sqlite</code></td>
+</tr>
+<tr>
+<td><code>DB_DATABASE</code></td>
+<td>Path to the database file (default <code>database/database.sqlite</code>)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="postgresql"><a class="toclink" href="#postgresql">PostgreSQL</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Value it should have</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DB_CONNECTION</code></td>
+<td><code>pgsql</code></td>
+</tr>
+<tr>
+<td><code>DB_HOST</code></td>
+<td>Host of the database server (if it's running on the same server use <code>127.0.0.1</code>) or socket path</td>
+</tr>
+<tr>
+<td><code>DB_PORT</code></td>
+<td>Port of the database server or <code>null</code> if using socket (default 5432)</td>
+</tr>
+<tr>
+<td><code>DB_DATABASE</code></td>
+<td>The name of the database</td>
+</tr>
+<tr>
+<td><code>DB_USERNAME</code></td>
+<td>Username of the database user</td>
+</tr>
+<tr>
+<td><code>DB_PASSWORD</code></td>
+<td>Password of the database user</td>
+</tr>
+</tbody>
+</table>
+<h4 id="microsoft-sql-server"><a class="toclink" href="#microsoft-sql-server">Microsoft SQL Server</a></h4>
+<blockquote>
+<p>{note} Microsoft SQL Server is not officially supported. It may work, but we can't help you if you have any issues with it that do not affect other DB systems as well.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Value it should have</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DB_CONNECTION</code></td>
+<td><code>sqlsrv</code></td>
+</tr>
+<tr>
+<td><code>DB_HOST</code></td>
+<td>Host of the database server (if it's running on the same server use <code>127.0.0.1</code>)</td>
+</tr>
+<tr>
+<td><code>DB_PORT</code></td>
+<td>Port of the database server (default 1433)</td>
+</tr>
+<tr>
+<td><code>DB_DATABASE</code></td>
+<td>The name of the database</td>
+</tr>
+<tr>
+<td><code>DB_USERNAME</code></td>
+<td>Username of the database user</td>
+</tr>
+<tr>
+<td><code>DB_PASSWORD</code></td>
+<td>Password of the database user</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mailer-options"><a class="toclink" href="#mailer-options">Mailer options</a></h3>
+<p>Supported mailers are <code>smtp</code>, <code>ses</code>, <code>mailgun</code>, <code>postmark</code> or <code>sendmail</code>, which you can set using <code>MAIL_DRIVER</code>.</p>
+<h4 id="general-options"><a class="toclink" href="#general-options">General options</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAIL_DRIVER</code></td>
+<td>Mailer type</td>
+</tr>
+<tr>
+<td><code>MAIL_FROM_ADDRESS</code></td>
+<td>"From" address</td>
+</tr>
+<tr>
+<td><code>MAIL_FROM_NAME</code></td>
+<td>"From" name</td>
+</tr>
+</tbody>
+</table>
+<h4 id="smtp"><a class="toclink" href="#smtp">SMTP</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAIL_HOST</code></td>
+<td>Host of SMTP server</td>
+</tr>
+<tr>
+<td><code>MAIL_PORT</code></td>
+<td>Port of SMTP server (default 587)</td>
+</tr>
+<tr>
+<td><code>MAIL_ENCRYPTION</code></td>
+<td>Encryption for SMTP server (default <code>tls</code>)</td>
+</tr>
+<tr>
+<td><code>MAIL_USERNAME</code></td>
+<td>Username of SMTP server</td>
+</tr>
+<tr>
+<td><code>MAIL_PASSWORD</code></td>
+<td>Password of SMTP server</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ses"><a class="toclink" href="#ses">SES</a></h4>
+<p>SES can be configured using AWS settings. See <a href="#aws">AWS configuration</a>.</p>
+<h4 id="mailgun"><a class="toclink" href="#mailgun">Mailgun</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAILGUN_DOMAIN</code></td>
+<td>Domain of the Mailgun server</td>
+</tr>
+<tr>
+<td><code>MAILGUN_SECRET</code></td>
+<td>Secret of the Mailgun server</td>
+</tr>
+<tr>
+<td><code>MAILGUN_ENDPOINT</code></td>
+<td>Mailgun endpoint (default <code>api.mailgun.net</code>)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="postmark"><a class="toclink" href="#postmark">Postmark</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POSTMARK_TOKEN</code></td>
+<td>Token for Postmark</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sendmail"><a class="toclink" href="#sendmail">sendmail</a></h4>
+<p>No additional options.</p>
+<h3 id="cache-options"><a class="toclink" href="#cache-options">Cache options</a></h3>
+<p>Lychee can use various services as cache driver to store temporary data. The driver is set using <code>CACHE_DRIVER</code> and supports: <code>apc</code>, <code>array</code>, <code>file</code>, <code>memcached</code>, <code>redis</code> or <code>dynamodb</code>.</p>
+<h4 id="general-options_1"><a class="toclink" href="#general-options_1">General options</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CACHE_PREFIX</code></td>
+<td>Prefix of cache data keys in in-memory stores</td>
+</tr>
+</tbody>
+</table>
+<h4 id="memcached"><a class="toclink" href="#memcached">Memcached</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MEMCACHED_HOST</code></td>
+<td>Host for memcached</td>
+</tr>
+<tr>
+<td><code>MEMCACHED_PORT</code></td>
+<td>Port for memcached</td>
+</tr>
+<tr>
+<td><code>MEMCACHED_USERNAME</code></td>
+<td>Username for memcached</td>
+</tr>
+<tr>
+<td><code>MEMCACHED_PASSWORD</code></td>
+<td>Password for memcached</td>
+</tr>
+<tr>
+<td><code>MEMCACHED_PERSISTENT_ID</code></td>
+<td>Persistent ID for memcached</td>
+</tr>
+</tbody>
+</table>
+<h4 id="dynamodb"><a class="toclink" href="#dynamodb">DynamoDB</a></h4>
+<p>Base options are configured using <a href="#aws">AWS options</a>. You need to create a table, please refer to the <a href="https://laravel.com/docs/8.x/cache#dynamodb">Laravel docs</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DYNAMODB_CACHE_TABLE</code></td>
+<td>Cache table name</td>
+</tr>
+<tr>
+<td><code>DYNAMODB_ENDPOINT</code></td>
+<td>DynamoDB endpoint</td>
+</tr>
+</tbody>
+</table>
+<h4 id="redis"><a class="toclink" href="#redis">Redis</a></h4>
+<p>Also see <a href="#redis">Redis</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REDIS_CACHE_DB</code></td>
+<td>Redis cache database</td>
+</tr>
+</tbody>
+</table>
+<h4 id="database"><a class="toclink" href="#database">Database</a></h4>
+<p>There are no config options, however, you need to run <code>php artisan cache:table</code> to use this option.</p>
+<h3 id="services"><a class="toclink" href="#services">Services</a></h3>
+<p>Lychee can interact with various third-party services. You can find config options for them here.</p>
+<h4 id="redis_1"><a class="toclink" href="#redis_1">Redis</a></h4>
+<p>To use Redis, you need the <a href="https://github.com/phpredis/phpredis">PhpRedis</a> PHP extension.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REDIS_HOST</code></td>
+<td>Redis host</td>
+</tr>
+<tr>
+<td><code>REDIS_PASSWORD</code></td>
+<td>Redis password</td>
+</tr>
+<tr>
+<td><code>REDIS_PORT</code></td>
+<td>Redis port</td>
+</tr>
+<tr>
+<td><code>REDIS_CLUSTER</code></td>
+<td>Redis cluster</td>
+</tr>
+<tr>
+<td><code>REDIS_PREFIX</code></td>
+<td>Redis prefix</td>
+</tr>
+<tr>
+<td><code>REDIS_URL</code></td>
+<td>Redis URL</td>
+</tr>
+</tbody>
+</table>
+<h4 id="aws"><a class="toclink" href="#aws">AWS</a></h4>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AWS_ACCESS_KEY_ID</code></td>
+<td>Access key ID for AWS</td>
+</tr>
+<tr>
+<td><code>AWS_SECRET_ACCESS_KEY</code></td>
+<td>Secret access key for AWS</td>
+</tr>
+<tr>
+<td><code>AWS_DEFAULT_REGION</code></td>
+<td>Default AWS region</td>
+</tr>
+</tbody>
+</table>
+<h3 id="session-and-security-options"><a class="toclink" href="#session-and-security-options">Session and security options</a></h3>
+<p>Sessions are stored in the same locations as <a href="#cache">cache</a>. You change the used driver using <code>SESSION_DRIVER</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SESSION_LIFETIME</code></td>
+<td>Idle session expiration in minutes; the session will need to be reinitialized once it has expired (default 120)</td>
+</tr>
+<tr>
+<td><code>SESSION_SECURE_COOKIE</code></td>
+<td>Cookies only via HTTPS</td>
+</tr>
+<tr>
+<td><code>SECURITY_HEADER_HSTS_ENABLE</code></td>
+<td>Enable HTTP strict transport security</td>
+</tr>
+</tbody>
+</table>
+<h4 id="advanced-options"><a class="toclink" href="#advanced-options">Advanced options</a></h4>
+<blockquote>
+<p>{note} These config options are advanced config options. Do not change them unless you know what you are doing.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APP_CIPHER</code></td>
+<td>The app's cipher suite</td>
+</tr>
+<tr>
+<td><code>HASHING_DRIVER</code></td>
+<td>Hashing algorithm for passwords (default <code>bcrypt</code>, other options <code>argon</code> or <code>argon2id</code>)</td>
+</tr>
+<tr>
+<td><code>ARGON_MEMORY</code></td>
+<td>Memory for Argon hashing algorithm</td>
+</tr>
+<tr>
+<td><code>ARGON_THREADS</code></td>
+<td>Threads for Argon hashing algorithm</td>
+</tr>
+<tr>
+<td><code>ARGON_TIME</code></td>
+<td>Time for Argon hashing algorithm</td>
+</tr>
+<tr>
+<td><code>BCRYPT_ROUNDS</code></td>
+<td>Rounds for bcrypt hashing algorithm</td>
+</tr>
+<tr>
+<td><code>WEBAUTHN_NAME</code></td>
+<td>Name for Webauthn devices</td>
+</tr>
+<tr>
+<td><code>WEBAUTHN_ID</code></td>
+<td>ID for Webauthn devices</td>
+</tr>
+<tr>
+<td><code>WEBAUTHN_ICON</code></td>
+<td>Icon for Webauthn devices</td>
+</tr>
+<tr>
+<td><code>WEBAUTHN_CACHE</code></td>
+<td>Cache for Webauthn devices</td>
+</tr>
+<tr>
+<td><code>SESSION_COOKIE</code></td>
+<td>The cookie's name</td>
+</tr>
+<tr>
+<td><code>SESSION_DOMAIN</code></td>
+<td>Session cookie domain</td>
+</tr>
+</tbody>
+</table>
+<h3 id="development-options"><a class="toclink" href="#development-options">Development options</a></h3>
+<blockquote>
+<p>{note} Don't use this in productive environments. May affect stability and performance.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APP_ENV</code></td>
+<td>Set to <code>development</code> to enable development environment</td>
+</tr>
+<tr>
+<td><code>APP_DEBUG</code></td>
+<td>Enable debug mode</td>
+</tr>
+<tr>
+<td><code>DEBUGBAR_ENABLED</code></td>
+<td>Enable debugbar</td>
+</tr>
+<tr>
+<td><code>DB_LOG_SQL</code></td>
+<td>Log SQL statements, find the log file under <code>storage/logs/laravel.log</code></td>
+</tr>
+<tr>
+<td><code>LIVEWIRE_ENABLED</code></td>
+<td>Enable experimental Livewire frontend</td>
+</tr>
+</tbody>
+</table>
+<h3 id="advanced-configuration"><a class="toclink" href="#advanced-configuration">Advanced configuration</a></h3>
+<blockquote>
+<p>{note} Only for advanced users familiar with PHP and Laravel. Never do this unless you know what you are doing.</p>
+</blockquote>
+<p>You can look at the files in the <code>config/</code> folder. They contain some options you can't configure using environmental variables and you are able to adapt Lychee completely to your needs.</p>
+<!--
+
+### Hidden options
+
+These options are unused right now, but may be used in the future.
+
+|Option|Description|
+|---|---|
+|`REDIS_DB`|Redis database, used for broadcasting and queue|
+|`REDIS_QUEUE`|Redis queue|
+|`BROADCAST_DRIVER`|Broadcast driver|
+|`QUEUE_DRIVER`|Queue driver|
+|`PUSHER_APP_ID|Pusher app ID|
+|`PUSHER_APP_KEY|Pusher app secret|
+|`PUSHER_APP_SECRET|Pusher app secret|
+|`PUSHER_APP_CLUSTER|Pusher app cluster|
+|`FILESYSTEM_CLOUD`|Cloud Filesystem|
+
+-->
+
 <h2 id="environment-configuration"><a class="toclink" href="#environment-configuration">Environment Configuration</a></h2>
 <p>It is often helpful to have different configuration values based on the environment where the application is running. For example, you may wish to use a different cache driver locally than you do on your production server.</p>
 <p>To make this a cinch, Lychee utilizes the <a href="https://github.com/vlucas/phpdotenv">DotEnv</a> PHP library by Vance Lucas. In a fresh Lychee installation, the root directory of your application will contain a <code>.env.example</code> file. You should make a copy of this file as <code>.env</code>.</p>
@@ -182,12 +775,12 @@
 <pre><code class="language-php">$environment = App::environment();
 </code></pre>
 <p>You may also pass arguments to the environment method to check if the environment matches a given value. The method will return true if the environment matches any of the given values:</p>
-<pre><code class="language-php">if (App::environment('local')) {
-    // The environment is local
+<pre><code class="language-php">if (App::environment('development')) {
+    // The environment is development
 }
 
-if (App::environment(['local', 'staging'])) {
-    // The environment is either local OR staging...
+if (App::environment(['development', 'production'])) {
+    // The environment is either development OR production...
 }
 </code></pre>
 <blockquote>
@@ -246,434 +839,7 @@ if (App::environment(['local', 'staging'])) {
 </code></pre>
 <blockquote>
 <p>{tip} You may customize the default maintenance mode template by defining your own template at <code>resources/views/errors/503.blade.php</code>.</p>
-</blockquote>
-<h2 id="configuration-options"><a class="toclink" href="#configuration-options">Configuration options</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>APP_NAME</code></td>
-<td>The gallery name</td>
-<td><code>Lychee</code></td>
-</tr>
-<tr>
-<td><code>APP_ENV</code></td>
-<td>Environment of your gallery, <code>production</code> or <code>development</code></td>
-<td><code>production</code></td>
-</tr>
-<tr>
-<td><code>APP_DEBUG</code></td>
-<td>Enable debug mode</td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>APP_URL</code></td>
-<td>The URL of your gallery (which resolves to the <code>public/</code> folder)</td>
-<td>http://localhost`</td>
-</tr>
-<tr>
-<td><code>APP_KEY</code></td>
-<td>Your app key which is used for encryption (set during installation)</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>TIMEZONE</code></td>
-<td>The timezone of your photos</td>
-<td>system timezone of server</td>
-</tr>
-<tr>
-<td><code>DEBUGBAR_ENABLED</code></td>
-<td>Enable debugbar (only for debugging)</td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>LOG_CHANNEL</code></td>
-<td>Default log channel, <code>single</code>, <code>daily</code>, <code>slack</code>, <code>syslog</code>, <code>errorlog</code>, <code>monolog</code>, <code>custom</code> or <code>stack</code></td>
-<td><code>stack</code></td>
-</tr>
-<tr>
-<td><code>DB_CONNECTION</code></td>
-<td>Database type, <code>mysql</code>, <code>pgsql</code>, <code>sqlite</code> or <code>sqlsrv</code> (<code>sqlsrv</code> is not supported officially and may not work)</td>
-<td><code>mysql</code></td>
-</tr>
-<tr>
-<td><code>DB_DATABASE</code></td>
-<td>Path to SQLite database or name of MySQL/PostgreSQL DB</td>
-<td><code>database/database.sqlite</code> or <code>forge</code></td>
-</tr>
-<tr>
-<td><code>DB_HOST</code></td>
-<td>Host of DB server</td>
-<td><code>127.0.0.1</code></td>
-</tr>
-<tr>
-<td><code>DB_PORT</code></td>
-<td>Post of DB server</td>
-<td><code>3306</code> (MySQL) or <code>5432</code> (PostgreSQL)</td>
-</tr>
-<tr>
-<td><code>DB_USERNAME</code></td>
-<td>Username of database</td>
-<td><code>forge</code></td>
-</tr>
-<tr>
-<td><code>DB_PASSWORD</code></td>
-<td>Password of database user</td>
-<td>empty string</td>
-</tr>
-<tr>
-<td><code>DB_OLD_LYCHEE_PREFIX</code></td>
-<td>Table prefix of old Lychee database (v3)</td>
-<td>empty string</td>
-</tr>
-<tr>
-<td><code>DB_LOG_SQL</code></td>
-<td>Log SQL statements (only use for debugging)</td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>CACHE_DRIVER</code></td>
-<td>The driver used for caching, <code>apc</code>, <code>array</code>, <code>database</code>, <code>file</code>, <code>memcached</code>, <code>redis</code> or <code>dynamodb</code></td>
-<td><code>file</code></td>
-</tr>
-<tr>
-<td><code>REDIS_HOST</code></td>
-<td>Redis host</td>
-<td><code>127.0.0.1</code></td>
-</tr>
-<tr>
-<td><code>REDIS_PASSWORD</code></td>
-<td>Redis password</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>REDIS_PORT</code></td>
-<td>Redis port</td>
-<td><code>6379</code></td>
-</tr>
-<tr>
-<td><code>LYCHEE_UPLOADS</code></td>
-<td>Path to uploads directory inside the <code>public/</code> directory</td>
-<td><code>uploads/</code></td>
-</tr>
-<tr>
-<td><code>LYCHEE_UPLOADS_URL</code></td>
-<td>URL to uploads directory</td>
-<td><code>uploads/</code></td>
-</tr>
-<tr>
-<td><code>LYCHEE_DIST</code></td>
-<td>Path to dist directory inside the <code>public/</code> directory</td>
-<td><code>dist/</code></td>
-</tr>
-<tr>
-<td><code>LYCHEE_DIST_URL</code></td>
-<td>URL to dist directory</td>
-<td><code>dist/</code></td>
-</tr>
-<tr>
-<td><code>MAIL_DRIVER</code></td>
-<td>Mailer type, <code>smtp</code>, <code>ses</code>, <code>mailgun</code>, <code>postmark</code>, <code>sendmail</code>, <code>log</code> or <code>array</code></td>
-<td><code>smtp</code></td>
-</tr>
-<tr>
-<td><code>MAIL_HOST</code></td>
-<td>Host of SMTP server</td>
-<td><code>smtp.mailgun.org</code></td>
-</tr>
-<tr>
-<td><code>MAIL_PORT</code></td>
-<td>Port of SMTP server</td>
-<td><code>587</code></td>
-</tr>
-<tr>
-<td><code>MAIL_ENCRYPTION</code></td>
-<td>Encryption for SMTP server</td>
-<td><code>tls</code></td>
-</tr>
-<tr>
-<td><code>MAIL_USERNAME</code></td>
-<td>Username of SMTP server</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MAIL_PASSWORD</code></td>
-<td>Password of SMTP server</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MAIL_FROM_ADDRESS</code></td>
-<td>"From" address</td>
-<td><code>hello@example.com</code></td>
-</tr>
-<tr>
-<td><code>MAIL_FROM_NAME</code></td>
-<td>"From" name</td>
-<td><code>Example</code></td>
-</tr>
-<tr>
-<td><code>SESSION_DRIVER</code></td>
-<td>Driver for sessions, <code>file</code>, <code>cookie</code>, <code>database</code>, <code>apc</code>, <code>memcached</code>, <code>redis</code>, <code>dynamodb</code> or <code>array</code></td>
-<td><code>file</code></td>
-</tr>
-<tr>
-<td><code>SESSION_LIFETIME</code></td>
-<td>Idle session expiration in minutes; the session will need to be reinitialized once it has expired</td>
-<td><code>120</code></td>
-</tr>
-<tr>
-<td><code>TRUSTED_PROXIES</code></td>
-<td>Trusted proxy IP addresses</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>SECURITY_HEADER_HSTS_ENABLE</code></td>
-<td>Enable HTTP strict transport security</td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>SESSION_SECURE_COOKIE</code></td>
-<td>Cookies only via HTTPS</td>
-<td><code>false</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="advanced-configuration-options"><a class="toclink" href="#advanced-configuration-options">Advanced configuration options</a></h3>
-<blockquote>
-<p>{note} These config options are advanced config options. Do not change them unless you know what you are doing. Some of them may be unused due to internal structures.</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>LIVEWIRE_ENABLED</code></td>
-<td>Enable experimental Livewire frontend</td>
-<td><code>false</code></td>
-</tr>
-<tr>
-<td><code>ASSET_URL</code></td>
-<td>URL for assets</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>APP_CIPHER</code></td>
-<td>The app's cipher suite</td>
-<td><code>AES-256-CBC</code></td>
-</tr>
-<tr>
-<td><code>MEMCACHED_PERSISTENT_ID</code></td>
-<td>Persistent ID for memcached</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MEMCACHED_USERNAME</code></td>
-<td>Username for memcached</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MEMCACHED_PASSWORD</code></td>
-<td>Password for memcached</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MEMCACHED_HOST</code></td>
-<td>Host for memcached</td>
-<td><code>127.0.0.1</code></td>
-</tr>
-<tr>
-<td><code>MEMCACHED_PORT</code></td>
-<td>Port for memcached</td>
-<td><code>11211</code></td>
-</tr>
-<tr>
-<td><code>AWS_ACCESS_KEY_ID</code></td>
-<td>Access key ID for AWS, used for dynamodb</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>AWS_SECRET_ACCESS_KEY</code></td>
-<td>Secret access key for AWS, used for dynamodb</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>AWS_DEFAULT_REGION</code></td>
-<td>Default AWS region, used for dynamodb cache driver</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>DYNAMODB_CACHE_TABLE</code></td>
-<td>Cache table for dynamodb cache driver</td>
-<td><code>cache</code></td>
-</tr>
-<tr>
-<td><code>DYNAMODB_ENDPOINT</code></td>
-<td>Endpoint for dynamodb cache driver</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>DATABASE_URL</code></td>
-<td>Database URL</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>DB_FOREIGN_KEYS</code></td>
-<td>Enable foreign key constraints</td>
-<td><code>true</code></td>
-</tr>
-<tr>
-<td><code>DB_SOCKET</code></td>
-<td>UNIX socket of database</td>
-<td>empty string</td>
-</tr>
-<tr>
-<td><code>MYSQL_ATTR_SSL_CA</code></td>
-<td>File path to the SSL certificate authority</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>REDIS_CLIENT</code></td>
-<td>Redis client</td>
-<td><code>phpredis</code></td>
-</tr>
-<tr>
-<td><code>REDIS_CLUSTER</code></td>
-<td>Redis cluster</td>
-<td><code>redis</code></td>
-</tr>
-<tr>
-<td><code>REDIS_PREFIX</code></td>
-<td>Redis prefix</td>
-<td>the value of <code>APP_NAME</code></td>
-</tr>
-<tr>
-<td><code>REDIS_URL</code></td>
-<td>Redis URL</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>REDIS_DB</code></td>
-<td>Redis database</td>
-<td><code>0</code></td>
-</tr>
-<tr>
-<td><code>REDIS_CACHE_DB</code></td>
-<td>Redis cache database</td>
-<td><code>1</code></td>
-</tr>
-<tr>
-<td><code>BCRYPT_ROUNDS</code></td>
-<td>Rounds for bcrypt hashing algorithm</td>
-<td><code>10</code></td>
-</tr>
-<tr>
-<td><code>WEBAUTHN_NAME</code></td>
-<td>Name for Webauthn devices</td>
-<td>the value of <code>APP_NAME</code></td>
-</tr>
-<tr>
-<td><code>WEBAUTHN_ID</code></td>
-<td>ID for Webauthn devices</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>WEBAUTHN_ICON</code></td>
-<td>Icon for Webauthn devices</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>WEBAUTHN_CACHE</code></td>
-<td>Cache for Webauthn devices</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>LOG_SLACK_WEBHOOK_URL</code></td>
-<td>Webhook URL for slack logging</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>PAPERTRAIL_URL</code></td>
-<td>URL for papertrail logging</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>PAPERTRAIL_PORT</code></td>
-<td>Port for papertrail logging</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>LOG_STDERR_FORMATTER</code></td>
-<td>Formatter for logging to stderr</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MAIL_LOG_CHANNEL</code></td>
-<td>Log channel for mails</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>REDIS_QUEUE</code></td>
-<td>Redis queue</td>
-<td><code>default</code></td>
-</tr>
-<tr>
-<td><code>MAILGUN_DOMAIN</code></td>
-<td>Domain to mailgun</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MAILGUN_SECRET</code></td>
-<td>Serect for mailgun</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>MAILGUN_ENDPOINT</code></td>
-<td>Endpoint to mailgun</td>
-<td><code>api.mailgun.net</code></td>
-</tr>
-<tr>
-<td><code>POSTMARK_TOKEN</code></td>
-<td>Token for postmark</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>SESSION_CONNECTION</code></td>
-<td>Session connection for <code>database</code> and <code>redis</code> drivers</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>SESSION_STORE</code></td>
-<td>Store for sessions, affects <code>apc</code>, <code>dynamodb</code>, <code>memcached</code> and <code>redis</code> drivers</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>SESSION_COOKIE</code></td>
-<td>The cookie's name</td>
-<td>the value of <code>APP_NAME</code> + <code>_session</code></td>
-</tr>
-<tr>
-<td><code>SESSION_DOMAIN</code></td>
-<td>Session cookie domain</td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>VIEW_COMPILED_PATH</code></td>
-<td>Where to store compiled Blade templates</td>
-<td><code>framework/views</code></td>
-</tr>
-</tbody>
-</table><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/configuration.md">Edit this page on Github!</a></p></blockquote>
+</blockquote><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/configuration.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>
                 </section>
