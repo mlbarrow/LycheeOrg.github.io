@@ -184,7 +184,34 @@ It contains a trimmed down version of the Lychee files.</p>
 <p>If you want to help develop Lychee, install the development dependencies by removing the <code>--no-dev</code> or replacing it with <code>--dev</code>.</p>
 <h3 id="configuration"><a class="toclink" href="#configuration">Configuration</a></h3>
 <h4 id="directory-permissions"><a class="toclink" href="#directory-permissions">Directory Permissions</a></h4>
-<p>Directories within the <code>storage</code> and the <code>bootstrap/cache</code> directories must be writable by your web server or Lychee will not run. Additionally, <code>public/uploads</code>, <code>public/dist</code> and <code>public/sym</code> need to be writable to upload files, customise the CSS and utilise <a href="https://lycheeorg.github.io/docs/settings.html#symbolic-link">symbolic links</a> respectively.</p>
+<p>Permissions of certain directories must be set correctly for Lychee to run.
+Note that there are up to three OS users which need to be taken into consideration:</p>
+<ul>
+<li>The user who is running the Web server daemon; called the <strong>Web user</strong> in the following.
+   Depending on your distribution and web server typically this user is called <code>apache</code>, <code>nginx</code>, <code>www</code> or <code>www-data</code>.</li>
+<li>(Optional) The user who is running the PHP FPM (or PHP CGI) pool; called the <strong>PHP user</strong> in the following.
+   Not every setup uses PHP FPM or PHP CGI.
+   For example, Apache executes the PHP interpreter as part of its own process if the extension <code>mod_php</code> is used.
+   In case PHP FPM is used, for most distributions PHP FPM or CGI ships with a sensible default configuration which ensures that the PHP user is the same as the Web user.
+   In both cases the PHP user is not of concern.
+   However, we are at least aware of one exception to this rule for Nginx on Fedora, see <a href="https://lycheeorg.github.io/docs/faq.html#i-know-my-file-permissions-for-storage-bootstrapcache-publicuploads-and-publicdist-are-correct-and-accessible-by-my-web-server-user-but-im-still-getting-a-php-error-when-writing-to-any-of-these-directories">FAQ</a></li>
+<li>The user which you use for shell logins and to run scripts; called the <strong>CLI user</strong> in the following.
+   This user may be of particular concern, if you are planning to upload photos via the web interface <em>and</em> import photos via the shell scripts.</li>
+</ul>
+<p>The following permissions must be granted at least:</p>
+<ul>
+<li>All directories and files of the Lychee installation must at least be readable by the Web and PHP user.</li>
+<li>Directories and files within the <code>storage/</code> and the <code>bootstrap/cache/</code> directories must be writable by the Web and PHP user.</li>
+<li>If you wish to customise the CSS via the web frontend, directories and files within the <code>public/dist</code> directory must be writable by the Web and PHP user.</li>
+<li>Directories and files within the <code>public/uploads</code> and <code>public/sym</code> must at least be writeable by the Web and PHP user.
+   If you only intend to upload files via the web frontend, this is sufficient.
+   If you also plan to use the CLI to import files, the directories and files must additionally be writeable by the CLI user.
+   It is not sufficient, if only already existing directories are writeable by the Web, PHP and CLI user; all directories and files yet to be created must be so, too.
+   The recommended way is to ensure that all three users are at least members of one joined group, e.g., you may add your CLI user to the group used by the Web and PHP user.
+   The directories and files then need to owned by this group and be group writeable.
+   Further, the special <code>sgid</code> bit needs to be set for all directories.
+   This ensures that newly created directories and files become owned by the joined group and not by the primary group of the creator.</li>
+</ul>
 <h4 id="application-settings"><a class="toclink" href="#application-settings">Application Settings</a></h4>
 <p>The main directory should contain a <code>.env</code> file.
 Normally, Composer will have copied this file for you while installing the dependencies.
