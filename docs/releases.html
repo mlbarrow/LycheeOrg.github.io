@@ -106,6 +106,7 @@
                             
 <ul>
 <li><a href="#version-4">Version 4</a><ul>
+<li><a href="#v461">v4.6.1</a></li>
 <li><a href="#v460">v4.6.0</a></li>
 <li><a href="#v453">v4.5.3</a></li>
 <li><a href="#v440">v4.4.0</a></li>
@@ -223,11 +224,43 @@
 </style>
 
 <h2 id="version-4"><a class="toclink" href="#version-4">Version 4</a></h2>
+<h3 id="v461"><a class="toclink" href="#v461">v4.6.1</a></h3>
+<p>Released on Sep XX, 2022</p>
+<h4 id="important"><a class="toclink" href="#important">IMPORTANT</a></h4>
+<ul>
+<li>This update contains a Security Update which fix multiple <a href="https://github.com/LycheeOrg/Lychee-front/security/advisories/GHSA-cr79-38hg-27gv">XSS vulnerability</a> and update the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a>.</li>
+<li>This update will drop the API key in favor of Authorization token.
+As a result, once the migration is applied the old API token won't work anymore.</li>
+</ul>
+<h4 id="changes"><a class="toclink" href="#changes">Changes</a></h4>
+<ul>
+<li><code>new</code> #1489 : Drop page support<blockquote>
+<p>This functionality was not known by 99.9% of the users of Lychee.
+We decided to drop its support in favor of more targetted development in the core.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1443 : Add user and better structure to session json</li>
+<li><code>new</code> #1153 : Support for multi path on server import</li>
+<li><code>fixes</code> #1508 : Ensure that Admin rights are overloading others</li>
+<li><code>fixes</code> #1366 : Improve config options</li>
+<li><code>fixes</code> #1514 : 32 bits system improved support<blockquote>
+<p>For 32bit systems and time-based, legacy IDs we must catch failing inserts due to duplicate legacy ID
+when insertions is running too fast. In the past it was sufficient to check for MySQL error codes 23000
+and 23005 as integers and then pause for a short period of time.</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #1480 : Shared albums should not consider the <code>require_link</code> property.</li>
+<li><code>new</code> #1368 : Improve API client usability</li>
+<li><code>fixes</code> #1528 : Improve CSP and fix XSS vulnerability<blockquote>
+<p>See <a href="https://github.com/LycheeOrg/Lychee-front/security/advisories/GHSA-cr79-38hg-27gv">advisories</a></p>
+</blockquote>
+</li>
+</ul>
 <h3 id="v460"><a class="toclink" href="#v460">v4.6.0</a></h3>
 <p>Released on Sep 04, 2022</p>
-<h4 id="important"><a class="toclink" href="#important">IMPORTANT</a></h4>
+<h4 id="important_1"><a class="toclink" href="#important_1">IMPORTANT</a></h4>
 <p>Once the migration is applied, should you wish to rollback, you will need to reset your admin user otherwise it will not be possible to log as admin anymore.</p>
-<h4 id="changes"><a class="toclink" href="#changes">Changes</a></h4>
+<h4 id="changes_1"><a class="toclink" href="#changes_1">Changes</a></h4>
 <ul>
 <li><code>new</code> #1453 : Provide an ASCII fallback for multibyte filenames</li>
 <li><code>new</code> #1403 : Use Laravel Auth facade instead of home-brewed authentication layer <blockquote>
@@ -239,14 +272,14 @@
 </ul>
 <h3 id="v453"><a class="toclink" href="#v453">v4.5.3</a></h3>
 <p>Released on Aug 07, 2022</p>
-<h4 id="important_1"><a class="toclink" href="#important_1">IMPORTANT</a></h4>
+<h4 id="important_2"><a class="toclink" href="#important_2">IMPORTANT</a></h4>
 <ul>
 <li>The internal representation of Albums changed with version 4.5.0.<br />
 We strongly recommend that you <strong>BACK UP YOUR DATABASE BEFORE UPDATING</strong>.</li>
 <li>The folder structure changed for images; <strong>please check the required directory permissions</strong>.<br />
 Read more <a href="https://lycheeorg.github.io/docs/#directory-permissions">here  &#187;</a>.</li>
 </ul>
-<h4 id="changes_1"><a class="toclink" href="#changes_1">Changes</a></h4>
+<h4 id="changes_2"><a class="toclink" href="#changes_2">Changes</a></h4>
 <ul>
 <li>
 <p><code>new</code> : New ID scheme. Albums and photos are migrated to a new ID scheme. Previously, albums and photos used time-based integer IDs. The new IDs are truly 144bit of randomness encoded in Base64 as a 24-character string; e.g., if your photo had the URL <code>https://my-domain.tld/r/16102925744307/16102927818284</code> before, it may have the URL <code>https://my-domain.tld/r/GTqZfSso3nPeCnTNW4ovisgC/jM6KkmlK7X0LtVas5MjrHtTO</code> after the migration. This means, <strong>external links to your albums or photos will stop working.</strong> However, we implemented a redirection service. You can enable/disable the re-direction service under <code>Settings</code> &gt; <code>More</code> &gt; <code>legacy_id_redirection</code>. This gives you time to migrate any external reference to the new IDs. We also generate a log entry every time the redirection service is used. This log contains the legacy and new ID as well as information where the request came from. This may help you with the migration of your external links.</p>
