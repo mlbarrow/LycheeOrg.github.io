@@ -105,7 +105,7 @@
                             <h1>API Documentation</h1>
                             
 <ul>
-<li><a href="#phpindexphp-apisessioninit">php/index.php, /api/Session::init</a></li>
+<li><a href="#apisessioninit">/api/Session::init</a></li>
 <li><a href="#apisessionlogin">/api/Session::login</a></li>
 <li><a href="#apisessionlogout">/api/Session::logout</a></li>
 <li><a href="#apialbumsget">/api/Albums::get</a></li>
@@ -158,7 +158,7 @@
 <li><a href="#update">/Update</a></li>
 <li><a href="#apiupdateapply">/api/Update::Apply</a></li>
 <li><a href="#apiupdatecheck">/api/Update::Check</a></li>
-<li><a href="#apisearch">/api/search</a></li>
+<li><a href="#apisearchrun">/api/Search::run</a></li>
 <li><a href="#apisettingssetsorting">/api/Settings::setSorting</a></li>
 <li><a href="#apisettingssetlang">/api/Settings::setLang</a></li>
 <li><a href="#apisettingssetlayout">/api/Settings::setLayout</a></li>
@@ -190,7 +190,8 @@ See:</p>
 <li><a href="https://github.com/LycheeOrg/Lychee/blob/master/routes/web.php">routes/web.php</a></li>
 <li><a href="https://github.com/LycheeOrg/Lychee/blob/master/routes/admin.php">routes/admin.php</a></li>
 </ul>
-<h3 id="phpindexphp-apisessioninit"><a class="toclink" href="#phpindexphp-apisessioninit"><code>php/index.php</code>, <code>/api/Session::init</code></a></h3>
+<p>Note that for all request, <strong>'Accept: application/json' is mandatory</strong> and that without mention of the contrary <strong>'Content-Type: application/json' is also mandatory</strong>.</p>
+<h3 id="apisessioninit"><a class="toclink" href="#apisessioninit"><code>/api/Session::init</code></a></h3>
 <ul>
 <li><strong>POST</strong> request</li>
 <li>0 arguments</li>
@@ -415,11 +416,12 @@ See:</p>
 <ul>
 <li><strong>POST</strong> request</li>
 <li><em>upload</em> protection</li>
-<li>the <code>0</code> argument contains the file to upload.</li>
+<li>the <code>file</code> argument contains the file to upload.</li>
+<li>'Content-Type: multipart/form-data'</li>
 </ul>
 <pre><code class="language-php">$request-&gt;validate([
     'albumID' =&gt; 'string|required',
-    '0' =&gt; 'required',
+    'file' =&gt; 'required',
 ]);
 </code></pre>
 <h3 id="apiphotodelete"><a class="toclink" href="#apiphotodelete"><code>/api/Photo::delete</code></a></h3>
@@ -619,7 +621,7 @@ $oldUsername = $request-&gt;has('oldUsername') ? $request['oldUsername']: '';
 <li><strong>POST</strong> request</li>
 <li><em>admin</em> protection</li>
 </ul>
-<h3 id="apisearch"><a class="toclink" href="#apisearch"><code>/api/search</code></a></h3>
+<h3 id="apisearchrun"><a class="toclink" href="#apisearchrun"><code>/api/Search::run</code></a></h3>
 <ul>
 <li><strong>POST</strong> request</li>
 </ul>
