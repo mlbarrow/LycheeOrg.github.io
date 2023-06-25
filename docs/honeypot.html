@@ -66,7 +66,7 @@
 <li><a href='settings.html'>Settings</a></li>
 <li><a href='keyboard.html'>Keyboard Shortcuts</a></li>
 <li><a href='advanced-setups.html'>Advanced Setups</a></li>
-<li><a href='honeypot.html'>Honeypot and Teapots</a></li>
+<li class='active'><a href='honeypot.html'>Honeypot and Teapots</a></li>
 <li><a href='external_tracking.html'>External tracking with Matomo, Google Analytics & Co</a></li>
 </ul>
 <li class='sub--on'>
@@ -81,7 +81,7 @@
 <ul>
 <li><a href='contributions.html'>Contribution Guide</a></li>
 <li><a href='api.html'>API Documentation</a></li>
-<li class='active'><a href='architecture.html'>Lychee logic overview</a></li>
+<li><a href='architecture.html'>Lychee logic overview</a></li>
 <li><a href='structure.html'>Directory Structure</a></li>
 <li><a href='frontend.html'>Front-end</a></li>
 <li><a href='livewire.html'>Livewire Front-end (alpha)</a></li>
@@ -104,32 +104,66 @@
                 <section class="body_content">
                     <section class="docs_body">
                         <section class="docs_main">
-                            <h1>Lychee logic overview</h1>
+                            <h1>Honeypot and Teapots</h1>
                             
 <ul>
-<li><a href="#brief-introduction-to-laravel">Brief introduction to Laravel</a></li>
-<li><a href="#interesting-readings">Interesting readings</a></li>
+<li><a href="#rationale">Rationale</a></li>
+<li><a href="#what-is-fail2ban">What is Fail2ban?</a></li>
+<li><a href="#setting-up-fail2ban">Setting up Fail2Ban.</a><ul>
+<li><a href="#setup-the-filter">Setup the Filter</a></li>
+<li><a href="#setup-the-jail">Setup the Jail</a></li>
+</ul>
+</li>
 </ul>
 
-                            <hr> <h3 id="brief-introduction-to-laravel"><a class="toclink" href="#brief-introduction-to-laravel">Brief introduction to Laravel</a></h3>
-<p>Laravel is a MVC (Model-View-Controller) framework for PHP. Its process is as follows.</p>
-<ol>
-<li>A Request is made, it goes through the routes.</li>
-<li>The route decide which controller is being applied.<br>
-We apply a  middleware if requested (User Access verification mainly).</li>
-<li>The controller makes calls to models which is hides the calls to the database through clever queries.</li>
-<li>After applying logic, we return a view (template) or a JSON response.</li>
-</ol>
-<p>The following figure illustrate the process.</p>
-<p><img alt="https://cdn.auth0.com/blog/laravel-auth/mvc-diagram.png" src="img/mvc-diagram.png" /></p>
-<p>A detailed description of the directory structure is provided <a href="structure.html">here</a>.</p>
-<h3 id="interesting-readings"><a class="toclink" href="#interesting-readings">Interesting readings</a></h3>
-<ul>
-<li><a href="https://laravel.com/docs/7.x/">Laravel documentation</a> &mdash; a very detailed and nicely written.</li>
-<li><a href="https://github.com/alexeymezenin/laravel-best-practices">Best Practices</a> &mdash; we try to follow them on Lychee.</li>
-<li><a href="http://pwm.github.io/dynamic-dependency-injection/">Dynamic Dependency Injection</a> &mdash; Lychee and Laravel uses them a lot.</li>
-<li><a href="https://medium.com/@kamerk22/the-smart-way-to-handle-request-validation-in-laravel-5e8886279271">Request Validation</a> &mdash; We still need to see if this can be applied here.</li>
-</ul><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/architecture.md">Edit this page on Github!</a></p></blockquote>
+                            <hr> <h2 id="rationale"><a class="toclink" href="#rationale">Rationale</a></h2>
+<p>If you have had a look at your logs, you will notice that you get quite a few requests to pages that do not exists such as 
+<code>wp-admin.php</code> <em>etc.</em> Those are automatic queries done by vulnerability crawlers.
+This kind of trafic does not provide any value to the user and does not concern us.
+For this reason, Lychee provides an honeypot.</p>
+<p>If a user/robot/script queries one of the selected urls (honey) used by those vulnerability scanners, it will get a 418 response code.
+This response is logged in Nginx/Apache, and we use <a href="https://www.fail2ban.org/">fail2ban</a> to get rid of subsequent requests. </p>
+<h2 id="what-is-fail2ban"><a class="toclink" href="#what-is-fail2ban">What is Fail2ban?</a></h2>
+<p>Fail2ban is a small service that can be run on your server to dynamically block clients before a request is executed.
+It uses firewall rules to do so. After a certain amount of time (e.g. 1 day), the blocking rule is removed.</p>
+<blockquote>
+<p>{note} It will also ban you from your own website if you do a bad request.</p>
+</blockquote>
+<h2 id="setting-up-fail2ban"><a class="toclink" href="#setting-up-fail2ban">Setting up Fail2Ban.</a></h2>
+<blockquote>
+<p>{tip} <strong>Fail2ban is not provided with Lychee</strong>. It is an additional software that you will need to <a href="https://www.fail2ban.org/wiki/index.php/Downloads">install it yourself</a>.</p>
+</blockquote>
+<h3 id="setup-the-filter"><a class="toclink" href="#setup-the-filter">Setup the Filter</a></h3>
+<p>Create <code>/etc/fail2ban/filter.d/filter-honeypot.conf</code> with:</p>
+<pre><code class="language-ini">[Definition]
+failregex = ^&lt;HOST&gt;.*&quot;(GET|POST).*&quot; (418) .*$
+ignoreregex =
+</code></pre>
+<p>This defines which regex to use to filter the log files.
+From this regex, we retrieve the host if the response matches code 418 which is returned by Lychee when the honey is touched.</p>
+<h3 id="setup-the-jail"><a class="toclink" href="#setup-the-jail">Setup the Jail</a></h3>
+<p>Then we need to create the jail in:
+<code>/etc/fail2/ban/jail.d/honeypot.conf</code></p>
+<p>If you are using apache then the following will work:</p>
+<pre><code class="language-ini">[apache-honeypot]
+enabled = true
+filter = filter-honeypot
+port = http,https
+logpath = /var/log/apache2/access.log
+maxretry = 1
+</code></pre>
+<p>In the case of Nginx:</p>
+<pre><code class="language-ini">[apache-honeypot]
+enabled = true
+filter = filter-honeypot
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 1
+</code></pre>
+<p><code>maxretry</code> is set to 1 because we do not need to second guess those errors.
+Fail2ban is also used to ban ssh attempts after multiple failures, in such case a higher number of retry is need.
+As we interact with a honeypot, any behaviour touching it is therefore malicious, there are no false positive in our case
+and we do not give the benefit of the doubt.</p><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/honeypot.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>
                 </section>
