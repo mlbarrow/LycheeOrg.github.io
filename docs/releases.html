@@ -108,6 +108,8 @@
                             
 <ul>
 <li><a href="#version-4">Version 4</a><ul>
+<li><a href="#v4120">v4.12.0</a></li>
+<li><a href="#v4111">v4.11.1</a></li>
 <li><a href="#v4110">v4.11.0</a></li>
 <li><a href="#v4100">v4.10.0</a></li>
 <li><a href="#v494">v4.9.4</a></li>
@@ -246,9 +248,33 @@
 </style>
 
 <h2 id="version-4"><a class="toclink" href="#version-4">Version 4</a></h2>
+<h3 id="v4120"><a class="toclink" href="#v4120">v4.12.0</a></h3>
+<p>Released on Sep 16, 2023</p>
+<h4 id="changes"><a class="toclink" href="#changes">Changes</a></h4>
+<ul>
+<li><code>fixes</code> #2003 : Fix missing album decorations by @evoludolab.</li>
+<li><code>fixes</code> #2004 : Fix max/min_taken_at by @evoludolab.</li>
+<li><code>fixes</code> #2007 : Fix missing left-right button on smart albums by @ildyria.</li>
+<li><code>new</code> #2010 : Better diagnostics by @ildyria.</li>
+<li><code>new</code> #2012 : Better support for future policies. by @ildyria.</li>
+<li><code>new</code> #2015 : Replace layout and overlay to proper Enum types by @ildyria.</li>
+</ul>
+<h3 id="v4111"><a class="toclink" href="#v4111">v4.11.1</a></h3>
+<p>Released on Sep 3, 2023</p>
+<h4 id="changes_1"><a class="toclink" href="#changes_1">Changes</a></h4>
+<ul>
+<li><code>fixes</code> #1982 : How about we don't execute tests twice? by @ildyria.</li>
+<li><code>fixes</code> #1981 : Minor fixes on List sharing permissions. by @ildyria.</li>
+<li><code>fixes</code> #1990 : Fix complaints in Diagnostics when no migrations has been run by @ildyria.</li>
+<li><code>fixes</code> #1751 : Add error thrown if APP_URL does not match current url by @ildyria.</li>
+<li><code>fixes</code> #1991 : Fixes no log write access infinite loop by @ildyria.</li>
+<li><code>fixes</code> #1950 : Do not enforce strict model when downloading by @ildyria.</li>
+<li><code>fixes</code> #1686 : Providing absolute path if not set by @ildyria.</li>
+<li><code>new</code> #1999 : Webauthn supports also username by @ildyria.</li>
+</ul>
 <h3 id="v4110"><a class="toclink" href="#v4110">v4.11.0</a></h3>
 <p>Released on Aug 13, 2023</p>
-<h4 id="changes"><a class="toclink" href="#changes">Changes</a></h4>
+<h4 id="changes_2"><a class="toclink" href="#changes_2">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1963 : Change two German translations by @caminsha</li>
 <li><code>fixes</code> #1975 : Fix bad placeholder in PT locale by @d7415 </li>
@@ -257,7 +283,7 @@
 </ul>
 <h3 id="v4100"><a class="toclink" href="#v4100">v4.10.0</a></h3>
 <p>Released on Aug 1, 2023</p>
-<h4 id="changes_1"><a class="toclink" href="#changes_1">Changes</a></h4>
+<h4 id="changes_3"><a class="toclink" href="#changes_3">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1928 : Fix NSFW not toggling via Protection Panel by @ildyria</li>
 <li><code>new</code> #1933 : Improve translations to German by @CodingWithCard</li>
@@ -270,7 +296,7 @@
 </ul>
 <h3 id="v494"><a class="toclink" href="#v494">v4.9.4</a></h3>
 <p>Released on Jun 28, 2023</p>
-<h4 id="changes_2"><a class="toclink" href="#changes_2">Changes</a></h4>
+<h4 id="changes_4"><a class="toclink" href="#changes_4">Changes</a></h4>
 <ul>
 <li><code>new</code> #1901 : Make exceptions in one log line by @ildyria </li>
 <li><code>fixes</code> #1884 : Fixes wrong redirection when Lychee is used in a subfolder by @ildyria </li>
@@ -281,7 +307,7 @@
 <p>Released on Jun 25, 2023</p>
 <p>This releases introduces the ability to use external logging system.
 Please refer to <a href="external_tracking.html">External tracking with Matomo, Google Analytics &amp; Co</a> for examples.</p>
-<h4 id="changes_3"><a class="toclink" href="#changes_3">Changes</a></h4>
+<h4 id="changes_5"><a class="toclink" href="#changes_5">Changes</a></h4>
 <ul>
 <li><code>new</code> #1870 : Allow script-src and connect-src configuration by @timo-reymann</li>
 <li><code>new</code> #1873 : Support files without extensions in importFromUrl by @wladif</li>
@@ -296,7 +322,7 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 </ul>
 <h3 id="v492"><a class="toclink" href="#v492">v4.9.2</a></h3>
 <p>Released on May 22, 2023</p>
-<h4 id="changes_4"><a class="toclink" href="#changes_4">Changes</a></h4>
+<h4 id="changes_6"><a class="toclink" href="#changes_6">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1861 : Remove hashes from CSP when using log-viewer by @ildyria</li>
 <li><code>fixes</code> #1862 : Remove duplicate link. Tweak comment by @d7415</li>
@@ -304,7 +330,7 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 <h3 id="v491"><a class="toclink" href="#v491">v4.9.1</a></h3>
 <p>Released on May 19, 2023</p>
 <h4 id="do-not-use-broken-logs-broken-csp"><a class="toclink" href="#do-not-use-broken-logs-broken-csp">DO NOT USE - BROKEN LOGS (broken CSP).</a></h4>
-<h4 id="changes_5"><a class="toclink" href="#changes_5">Changes</a></h4>
+<h4 id="changes_7"><a class="toclink" href="#changes_7">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1856 : Fixes #1855 - update Makefile by @ildyria</li>
 <li><code>fixes</code> #1857 : Fix version 4.9 log-viewer paths hard coding by @ildyria</li>
@@ -312,7 +338,7 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 <h3 id="v490"><a class="toclink" href="#v490">v4.9.0</a></h3>
 <p>Released on May 18, 2023</p>
 <h4 id="do-not-use-broken-logs-missing-public-files"><a class="toclink" href="#do-not-use-broken-logs-missing-public-files">DO NOT USE - BROKEN LOGS (missing public files).</a></h4>
-<h4 id="changes_6"><a class="toclink" href="#changes_6">Changes</a></h4>
+<h4 id="changes_8"><a class="toclink" href="#changes_8">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1848 : Remove public option from album ordering: no longer supported by @ildyria</li>
 <li><code>fixes</code> #1850 : Fix SQL error on removing public status from album by @ildyria</li>
@@ -320,7 +346,7 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 </ul>
 <h3 id="v481"><a class="toclink" href="#v481">v4.8.1</a></h3>
 <p>Released on May 15, 2023</p>
-<h4 id="changes_7"><a class="toclink" href="#changes_7">Changes</a></h4>
+<h4 id="changes_9"><a class="toclink" href="#changes_9">Changes</a></h4>
 <ul>
 <li><code>new</code> #1826 : Improved support of migration very old versions (untestable code) by @ildyria</li>
 <li><code>new</code> #1821 : Add backend implementation to use file's last modified time by @wladif<blockquote>
@@ -334,19 +360,19 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 </ul>
 <h3 id="v480"><a class="toclink" href="#v480">v4.8.0</a></h3>
 <p>Released on May 5, 2023</p>
-<h4 id="changes_8"><a class="toclink" href="#changes_8">Changes</a></h4>
+<h4 id="changes_10"><a class="toclink" href="#changes_10">Changes</a></h4>
 <ul>
 <li><code>new</code> #1792 : Use access permissions instead of base_album table to determine access rights by @ildyria</li>
 </ul>
 <h3 id="v474"><a class="toclink" href="#v474">v4.7.4</a></h3>
 <p>Released on May 4, 2023</p>
-<h4 id="changes_9"><a class="toclink" href="#changes_9">Changes</a></h4>
+<h4 id="changes_11"><a class="toclink" href="#changes_11">Changes</a></h4>
 <ul>
 <li><code>new</code> #1819 : Make it possible to fetch random image without needing to be public &amp; starred by @mingan666</li>
 </ul>
 <h3 id="v473"><a class="toclink" href="#v473">v4.7.3</a></h3>
 <p>Released on April 19, 2023</p>
-<h4 id="changes_10"><a class="toclink" href="#changes_10">Changes</a></h4>
+<h4 id="changes_12"><a class="toclink" href="#changes_12">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1786 : Update dependencies (including php-exif) by @qwerty287</li>
 <li><code>new</code> #1787 : Remove requirement of Auth in photo upload, pass ownerId as argument by @ildyria</li>
@@ -361,7 +387,7 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 </ul>
 <h3 id="v472"><a class="toclink" href="#v472">v4.7.2</a></h3>
 <p>Pre-released on Mar 8, 2023</p>
-<h4 id="changes_11"><a class="toclink" href="#changes_11">Changes</a></h4>
+<h4 id="changes_13"><a class="toclink" href="#changes_13">Changes</a></h4>
 <ul>
 <li><code>new</code> #1755 : Ship an empty custom.js to prevent spamming the console (#1753) by @nicokaiser</li>
 <li><code>fixes</code> #1756 : Fixes locale not working (#1754) by @ildyria</li>
@@ -374,7 +400,7 @@ Please refer to <a href="external_tracking.html">External tracking with Matomo, 
 <h3 id="v471"><a class="toclink" href="#v471">v4.7.1</a></h3>
 <p>Pre-released on Feb 5, 2023</p>
 <h4 id="do-not-use-broken-locale"><a class="toclink" href="#do-not-use-broken-locale">DO NOT USE - BROKEN LOCALE.</a></h4>
-<h4 id="changes_12"><a class="toclink" href="#changes_12">Changes</a></h4>
+<h4 id="changes_14"><a class="toclink" href="#changes_14">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1688 : Update French.php by @davidbercot</li>
 <li><code>fixes</code> #1674 : Share button not working by @ildyria</li>
@@ -410,7 +436,7 @@ This change adds a new <code>.env</code> configuration variable enforcing HTTPS 
 <h3 id="v470"><a class="toclink" href="#v470">v4.7.0</a></h3>
 <p>Released on Jan 4, 2023</p>
 <h4 id="php-81-required"><a class="toclink" href="#php-81-required">PHP 8.1+ REQUIRED</a></h4>
-<h4 id="changes_13"><a class="toclink" href="#changes_13">Changes</a></h4>
+<h4 id="changes_15"><a class="toclink" href="#changes_15">Changes</a></h4>
 <ul>
 <li><code>new</code> #1631 : Customizable album decorations by @evoludolab<blockquote>
 <p>Allows to change the layer symbol in the top right corner of albums which indicated
@@ -440,7 +466,7 @@ This is now resolved.</p>
 <h3 id="v465"><a class="toclink" href="#v465">v4.6.5</a></h3>
 <p>Released on Dec 26, 2022</p>
 <h4 id="last-support-for-php-80"><a class="toclink" href="#last-support-for-php-80">LAST SUPPORT FOR PHP 8.0</a></h4>
-<h4 id="changes_14"><a class="toclink" href="#changes_14">Changes</a></h4>
+<h4 id="changes_16"><a class="toclink" href="#changes_16">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1665 : Fix migration for PostgreSQL users by @ildyria</li>
 <li><code>new</code> #1667 : add setting to allow username change (default to true) by @ildyria</li>
@@ -451,7 +477,7 @@ This is now resolved.</p>
 <ul>
 <li>This release does significant changes at the database level, do make sure you have a back-up available if necessary.</li>
 </ul>
-<h4 id="changes_15"><a class="toclink" href="#changes_15">Changes</a></h4>
+<h4 id="changes_17"><a class="toclink" href="#changes_17">Changes</a></h4>
 <ul>
 <li><code>fixes</code> #1590 : Fix list of shares by @nagmat84</li>
 <li><code>new</code> #1594 : Add flags to command by @qwerty287</li>
@@ -495,7 +521,7 @@ This is now resolved.</p>
 <ul>
 <li>This update contains an upgrade of U2F packages with a very different core, as a consequence any U2F credentials stored have been destroyed and will need to be registered again.</li>
 </ul>
-<h4 id="changes_16"><a class="toclink" href="#changes_16">Changes</a></h4>
+<h4 id="changes_18"><a class="toclink" href="#changes_18">Changes</a></h4>
 <ul>
 <li><code>new</code> #1519 : Adopt new modern dialog</li>
 <li><code>fixes</code> #1494 : Consolidate localization</li>
@@ -513,7 +539,7 @@ This is now resolved.</p>
 <li>This update will drop the API key in favor of Authorization token.
 As a result, once the migration is applied the old API token won't work anymore.</li>
 </ul>
-<h4 id="changes_17"><a class="toclink" href="#changes_17">Changes</a></h4>
+<h4 id="changes_19"><a class="toclink" href="#changes_19">Changes</a></h4>
 <ul>
 <li><code>new</code> #1489 : Drop page support<blockquote>
 <p>This functionality was not known by 99.9% of the users of Lychee.
@@ -541,7 +567,7 @@ and 23005 as integers and then pause for a short period of time.</p>
 <p>Released on Sep 04, 2022</p>
 <h4 id="important_3"><a class="toclink" href="#important_3">IMPORTANT</a></h4>
 <p>Once the migration is applied, should you wish to rollback, you will need to reset your admin user otherwise it will not be possible to log as admin anymore.</p>
-<h4 id="changes_18"><a class="toclink" href="#changes_18">Changes</a></h4>
+<h4 id="changes_20"><a class="toclink" href="#changes_20">Changes</a></h4>
 <ul>
 <li><code>new</code> #1453 : Provide an ASCII fallback for multibyte filenames</li>
 <li><code>new</code> #1403 : Use Laravel Auth facade instead of home-brewed authentication layer <blockquote>
@@ -560,7 +586,7 @@ We strongly recommend that you <strong>BACK UP YOUR DATABASE BEFORE UPDATING</st
 <li>The folder structure changed for images; <strong>please check the required directory permissions</strong>.<br />
 Read more <a href="https://lycheeorg.github.io/docs/#directory-permissions">here  &#187;</a>.</li>
 </ul>
-<h4 id="changes_19"><a class="toclink" href="#changes_19">Changes</a></h4>
+<h4 id="changes_21"><a class="toclink" href="#changes_21">Changes</a></h4>
 <ul>
 <li>
 <p><code>new</code> : New ID scheme. Albums and photos are migrated to a new ID scheme. Previously, albums and photos used time-based integer IDs. The new IDs are truly 144bit of randomness encoded in Base64 as a 24-character string; e.g., if your photo had the URL <code>https://my-domain.tld/r/16102925744307/16102927818284</code> before, it may have the URL <code>https://my-domain.tld/r/GTqZfSso3nPeCnTNW4ovisgC/jM6KkmlK7X0LtVas5MjrHtTO</code> after the migration. This means, <strong>external links to your albums or photos will stop working.</strong> However, we implemented a redirection service. You can enable/disable the re-direction service under <code>Settings</code> &gt; <code>More</code> &gt; <code>legacy_id_redirection</code>. This gives you time to migrate any external reference to the new IDs. We also generate a log entry every time the redirection service is used. This log contains the legacy and new ID as well as information where the request came from. This may help you with the migration of your external links.</p>
