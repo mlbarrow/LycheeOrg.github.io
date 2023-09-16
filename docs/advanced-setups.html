@@ -123,6 +123,14 @@
 <li><a href="#with-alwaysdata-paid">With alwaysdata (Paid)</a></li>
 </ul>
 </li>
+<li><a href="#implementing-object-storage">Implementing Object Storage</a><ul>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#s3-object-storage-setup">S3 Object Storage Setup</a></li>
+<li><a href="#create-and-run-lychee-container">Create and run Lychee container</a></li>
+<li><a href="#configure-env">Configure .ENV</a></li>
+<li><a href="#limitations-to-be-considered">Limitations to be considered</a></li>
+</ul>
+</li>
 </ul>
 
                             <hr> <div class="issuelinks">
@@ -271,6 +279,62 @@ You can find the source code of the app under <a href="https://github.com/YunoHo
 <p>alwaysdata.com is a modern hosting platform allowing you to host all your services in one place: files, emails, sites, media, databases, workers, etc.</p>
 <p>You can use their Marketplace to <a href="https://www.alwaysdata.com/en/marketplace/lychee/">install Lychee</a> and have your own instance available (with HTTPS) within a minute!</p>
 <p>See their pricing <a href="https://www.alwaysdata.com/en/">here</a>.</p>
+<h2 id="implementing-object-storage"><a class="toclink" href="#implementing-object-storage">Implementing Object Storage</a></h2>
+<p>An S3-compatible object storage solution is designed to store, manage, and access unstructured data in the cloud. </p>
+<p>Under Object Storage, files (also called objects) are stored in flat data structures (referred to as buckets) alongside their own rich metadata.</p>
+<p>Due to the nature of Object Storage, it does not require the use of a Compute Instance. Instead, Object Storage gives each object a unique URL with which you can access the data.</p>
+<h3 id="limitations"><a class="toclink" href="#limitations">Limitations</a></h3>
+<ul>
+<li>Upload file size limit: 5 GB</li>
+<li>All recursive tasks including (search, find, ls, etc.) have poor performance due to network latency</li>
+</ul>
+<h3 id="s3-object-storage-setup"><a class="toclink" href="#s3-object-storage-setup">S3 Object Storage Setup</a></h3>
+<p>The instructions in this guide are based on CentOS/Fedora/RHEL family, but it is easy to replicate the commands into any other distro.</p>
+<p><strong>Install s3fs FUSE-base file system</strong></p>
+<p>s3fs allows Linux and other OS's to mount an S3 bucket via FUSE (Filesystem in Userspace).</p>
+<p>s3fs makes you operate files and directories in S3 bucket like a local file system.</p>
+<p><a href="https://github.com/s3fs-fuse/s3fs-fuse">s3fs-fuse - Instructions from developer</a></p>
+<pre><code>sudo dnf install s3fs-fuse
+sudo echo ACCESS_KEY_ID:SECRET_ACCESS_KEY &gt; /etc/passwd-s3fs
+sudo chmod 600 /etc/passwd-s3fs
+</code></pre>
+<p><strong>Configure SELinux to allow access to the new filesystem</strong></p>
+<pre><code>setsebool -P httpd_use_fusefs 1
+</code></pre>
+<p><strong>Setup a permanent mounting point</strong></p>
+<p>Create S3 Object mount point:</p>
+<pre><code>sudo mkdir /mnt/bucket
+</code></pre>
+<p>Edit fstab to create a new mount on boot:</p>
+<pre><code>Add the following line to: /etc/fstab
+
+&lt;bucket&gt; /mnt/bucket fuse.s3fs _netdev, allow_other, enable_noobj_cache, url=&lt;s3_endpoint&gt;, use_cache=&quot;&quot;, passwd_file=/etc/passwd-s3fs, mp_umask=0002 0 0
+</code></pre>
+<pre><code>Example:
+    &lt;bucket&gt;                        mybucket (name used in your cloud provider)
+    &lt;s3_endpoint&gt;                   https://eu-central-1.linodeobjects.com
+
+Parameters are explained below:
+    allow_other                     Allow other users to access the bucket
+    mp_umask                        Mask permissions for mount point
+    enable_noobj_cache              Performance improvement - Enable when bucket is exclusively used by s3fs
+    use_cache=""                    Disabled
+    use_cache=/var/cache/s3fs       Enabled (to be used with care, because the cache can grow out of control. Also, I haven't noticed much difference using it)
+</code></pre>
+<p>Reboot your server to confirm S3 Object Storage is mounted correctly.</p>
+<p>Create Lychee's mount point:</p>
+<pre><code>sudo mkdir /mnt/bucket/uploads
+</code></pre>
+<h3 id="create-and-run-lychee-container"><a class="toclink" href="#create-and-run-lychee-container">Create and run Lychee container</a></h3>
+<p>From now on, Lychee will see the Object Storage mount transparently like any other mount. The container's volume <code>/uploads</code> needs to point to the new created mount:</p>
+<pre><code>sudo podman run --rm -d --name myphotos -v /mnt/bucket/uploads:/uploads -e PUID=33 -e PGID=1000 ... docker.io/lycheeorg/lychee
+</code></pre>
+<h3 id="configure-env"><a class="toclink" href="#configure-env">Configure .ENV</a></h3>
+<p>To avoid latency when clicking Diagnostics, my suggestion is to disable BasicPermissionCheck. Otherwise, depending on the number of photos in your gallery, this task can take hours.</p>
+<p><code>/var/lib/containers/storage/volumes/lychee-conf/_data/.env
+    SKIP_DIAGNOSTICS_CHECKS=BasicPermissionCheck</code></p>
+<h3 id="limitations-to-be-considered"><a class="toclink" href="#limitations-to-be-considered">Limitations to be considered</a></h3>
+<p>As explained before, recursive tasks are penalised in Object Storage, so if you have an existing bucket and the container runs for the first time, it will take long time to review and set the permissions in your mount. Depending on the number of photos, it can take several hours.</p>
 </div><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/advanced-setups.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>
