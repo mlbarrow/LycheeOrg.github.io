@@ -143,7 +143,7 @@ ignoreregex =
 From this regex, we retrieve the host if the response matches code 418 which is returned by Lychee when the honey is touched.</p>
 <h3 id="setup-the-jail"><a class="toclink" href="#setup-the-jail">Setup the Jail</a></h3>
 <p>Then we need to create the jail in:
-<code>/etc/fail2/ban/jail.d/honeypot.conf</code></p>
+<code>/etc/fail2ban/jail.d/honeypot.conf</code></p>
 <p>If you are using apache then the following will work:</p>
 <pre><code class="language-ini">[apache-honeypot]
 enabled = true
