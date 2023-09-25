@@ -128,7 +128,8 @@
 <li><a href="#s3-object-storage-setup">S3 Object Storage Setup</a></li>
 <li><a href="#create-and-run-lychee-container">Create and run Lychee container</a></li>
 <li><a href="#configure-env">Configure .ENV</a></li>
-<li><a href="#limitations-to-be-considered">Limitations to be considered</a></li>
+<li><a href="#setup-apache">Setup Apache</a></li>
+<li><a href="#configure-lychee">Configure Lychee</a></li>
 </ul>
 </li>
 </ul>
@@ -331,10 +332,52 @@ Parameters are explained below:
 </code></pre>
 <h3 id="configure-env"><a class="toclink" href="#configure-env">Configure .ENV</a></h3>
 <p>To avoid latency when clicking Diagnostics, my suggestion is to disable BasicPermissionCheck. Otherwise, depending on the number of photos in your gallery, this task can take hours.</p>
-<p><code>/var/lib/containers/storage/volumes/lychee-conf/_data/.env
-    SKIP_DIAGNOSTICS_CHECKS=BasicPermissionCheck</code></p>
-<h3 id="limitations-to-be-considered"><a class="toclink" href="#limitations-to-be-considered">Limitations to be considered</a></h3>
-<p>As explained before, recursive tasks are penalised in Object Storage, so if you have an existing bucket and the container runs for the first time, it will take long time to review and set the permissions in your mount. Depending on the number of photos, it can take several hours.</p>
+<p>```/var/lib/containers/storage/volumes/lychee-conf/_data/.env
+    SKIP_DIAGNOSTICS_CHECKS=BasicPermissionCheck</p>
+<pre><code>
+### Limitations to be considered
+As explained before, recursive tasks are penalised in Object Storage, so if you have an existing bucket and the container runs for the first time, it will take long time to review and set the permissions in your mount. Depending on the number of photos, it can take several hours.
+
+## Hosting Lychee in a subpath with Apache
+
+To serve Lychee in a subpath, e.g. `https://my.url/photos/`, we can use Apaches's [Alias](https://httpd.apache.org/docs/2.4/mod/mod_alias.html#alias)-directive.
+
+In this example we assume the web root to be located at `/var/www/html`, the web user and group to be `www-data`, and install [from the master branch](installation.html#from-the-master-branch).
+
+Before getting started, make sure your system qualifies the [Server Requirements](installation.html#server-requirements). 
+
+### Setup Lychee
+
+Clone the repository to outside the web root, e.g. `/var/www/`:
+
+```bash
+sudo git clone https://www.github.com/LycheeOrg/Lychee /var/www/
+</code></pre>
+<p>Set the file ownership and permissions:</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/Lychee
+sudo chmod -R 2775 /var/www/Lychee
+</code></pre>
+<p>Install composer in <code>/var/www/Lychee</code> as instructed in <a href="https://getcomposer.org/download/">here</a>. Then, from <code>/var/www/Lychee</code>, install the project dependencies:</p>
+<pre><code class="language-bash">sudo -u www-data php composer.phar install --no-dev
+</code></pre>
+<h3 id="setup-apache"><a class="toclink" href="#setup-apache">Setup Apache</a></h3>
+<p>Link <code>https://my.url/photos/</code> to <code>/var/www/Lychee/public</code> by adding the following to your Apache configuration for Aliases. In Apache 2.4 running on Debian, the correct configuration file is <code>/etc/apache2/mods-available/alias.conf</code>.</p>
+<pre><code class="language-apacheconf">Alias /photos /var/www/Lychee/public
+
+&lt;Directory /var/www/Lychee/public&gt;
+   Options FollowSymLinks
+   AllowOverride All
+   Require all granted
+&lt;/Directory&gt;
+</code></pre>
+<p>Finally, restart Apache:</p>
+<pre><code class="language-bash">sudo service apache2 restart
+</code></pre>
+<h3 id="configure-lychee"><a class="toclink" href="#configure-lychee">Configure Lychee</a></h3>
+<p>At this point, you should be able to go to <code>https://my.url/photos/</code> and run the web installer. During the installation procedure, on top of adding the database credentials to match your setup, set your <code>APP_URL</code> to the served subdirectory:</p>
+<pre><code class="language-bash">APP_URL=https://my.url/photos/
+</code></pre>
+<p>Done!</p>
 </div><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/advanced-setups.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>
