@@ -129,6 +129,11 @@
 <li><a href="#s3-object-storage-setup">S3 Object Storage Setup</a></li>
 <li><a href="#create-and-run-lychee-container">Create and run Lychee container</a></li>
 <li><a href="#configure-env">Configure .ENV</a></li>
+<li><a href="#limitations-to-be-considered">Limitations to be considered</a></li>
+</ul>
+</li>
+<li><a href="#hosting-lychee-in-a-subpath-with-apache">Hosting Lychee in a subpath with Apache</a><ul>
+<li><a href="#setup-lychee">Setup Lychee</a></li>
 <li><a href="#setup-apache">Setup Apache</a></li>
 <li><a href="#configure-lychee">Configure Lychee</a></li>
 </ul>
@@ -300,73 +305,69 @@ You can find the source code of the app under <a href="https://github.com/YunoHo
 <p>s3fs allows Linux and other OS's to mount an S3 bucket via FUSE (Filesystem in Userspace).</p>
 <p>s3fs makes you operate files and directories in S3 bucket like a local file system.</p>
 <p><a href="https://github.com/s3fs-fuse/s3fs-fuse">s3fs-fuse - Instructions from developer</a></p>
-<pre><code>sudo dnf install s3fs-fuse
+<pre><code class="language-bash">sudo dnf install s3fs-fuse
 sudo echo ACCESS_KEY_ID:SECRET_ACCESS_KEY &gt; /etc/passwd-s3fs
 sudo chmod 600 /etc/passwd-s3fs
 </code></pre>
 <p><strong>Configure SELinux to allow access to the new filesystem</strong></p>
-<pre><code>setsebool -P httpd_use_fusefs 1
+<pre><code class="language-bash">setsebool -P httpd_use_fusefs 1
 </code></pre>
 <p><strong>Setup a permanent mounting point</strong></p>
 <p>Create S3 Object mount point:</p>
-<pre><code>sudo mkdir /mnt/bucket
+<pre><code class="language-bash">sudo mkdir /mnt/bucket
 </code></pre>
-<p>Edit fstab to create a new mount on boot:</p>
-<pre><code>Add the following line to: /etc/fstab
-
-&lt;bucket&gt; /mnt/bucket fuse.s3fs _netdev, allow_other, enable_noobj_cache, url=&lt;s3_endpoint&gt;, use_cache=&quot;&quot;, passwd_file=/etc/passwd-s3fs, mp_umask=0002 0 0
+<p>Edit fstab to create a new mount on boot:<br />
+Add the following line to: <code>/etc/fstab</code></p>
+<pre><code class="language-bash">&lt;bucket&gt; /mnt/bucket fuse.s3fs _netdev, allow_other, enable_noobj_cache, url=&lt;s3_endpoint&gt;, use_cache=&quot;&quot;, passwd_file=/etc/passwd-s3fs, mp_umask=0002 0 0
 </code></pre>
-<pre><code>Example:
-    &lt;bucket&gt;                        mybucket (name used in your cloud provider)
-    &lt;s3_endpoint&gt;                   https://eu-central-1.linodeobjects.com
-
-Parameters are explained below:
-    allow_other                     Allow other users to access the bucket
-    mp_umask                        Mask permissions for mount point
-    enable_noobj_cache              Performance improvement - Enable when bucket is exclusively used by s3fs
-    use_cache=""                    Disabled
-    use_cache=/var/cache/s3fs       Enabled (to be used with care, because the cache can grow out of control. Also, I haven't noticed much difference using it)
-</code></pre>
-<p>Reboot your server to confirm S3 Object Storage is mounted correctly.</p>
-<p>Create Lychee's mount point:</p>
-<pre><code>sudo mkdir /mnt/bucket/uploads
+<p>Example:</p>
+<ul>
+<li><bucket>                        mybucket (name used in your cloud provider)</li>
+<li><s3_endpoint>                   https://eu-central-1.linodeobjects.com</li>
+</ul>
+<p>Parameters are explained below:</p>
+<ul>
+<li><code>allow_other</code>                     Allow other users to access the bucket</li>
+<li><code>mp_umask</code>                        Mask permissions for mount point</li>
+<li><code>enable_noobj_cache</code>              Performance improvement - Enable when bucket is exclusively used by s3fs</li>
+<li><code>use_cache=""</code>                    Disabled</li>
+<li><code>use_cache=/var/cache/s3fs</code>       Enabled (to be used with care, because the cache can grow out of control. Also, I haven't noticed much difference using it)</li>
+</ul>
+<p>Reboot your server to confirm S3 Object Storage is mounted correctly.<br />
+Create Lychee's mount point:</p>
+<pre><code class="language-bash">sudo mkdir /mnt/bucket/uploads
 </code></pre>
 <h3 id="create-and-run-lychee-container"><a class="toclink" href="#create-and-run-lychee-container">Create and run Lychee container</a></h3>
-<p>From now on, Lychee will see the Object Storage mount transparently like any other mount. The container's volume <code>/uploads</code> needs to point to the new created mount:</p>
-<pre><code>sudo podman run --rm -d --name myphotos -v /mnt/bucket/uploads:/uploads -e PUID=33 -e PGID=1000 ... docker.io/lycheeorg/lychee
+<p>From now on, Lychee will see the Object Storage mount transparently like any other mount.<br />
+The container's volume <code>/uploads</code> needs to point to the new created mount:</p>
+<pre><code class="language-bash">sudo podman run --rm -d --name myphotos -v /mnt/bucket/uploads:/uploads -e PUID=33 -e PGID=1000 ... docker.io/lycheeorg/lychee
 </code></pre>
 <h3 id="configure-env"><a class="toclink" href="#configure-env">Configure .ENV</a></h3>
 <p>To avoid latency when clicking Diagnostics, my suggestion is to disable BasicPermissionCheck. Otherwise, depending on the number of photos in your gallery, this task can take hours.</p>
-<p>```/var/lib/containers/storage/volumes/lychee-conf/_data/.env
-    SKIP_DIAGNOSTICS_CHECKS=BasicPermissionCheck</p>
-<pre><code>
-### Limitations to be considered
-As explained before, recursive tasks are penalised in Object Storage, so if you have an existing bucket and the container runs for the first time, it will take long time to review and set the permissions in your mount. Depending on the number of photos, it can take several hours.
-
-## Hosting Lychee in a subpath with Apache
-
-To serve Lychee in a subpath, e.g. `https://my.url/photos/`, we can use Apaches's [Alias](https://httpd.apache.org/docs/2.4/mod/mod_alias.html#alias)-directive.
-
-In this example we assume the web root to be located at `/var/www/html`, the web user and group to be `www-data`, and install [from the master branch](installation.html#from-the-master-branch).
-
-Before getting started, make sure your system qualifies the [Server Requirements](installation.html#server-requirements). 
-
-### Setup Lychee
-
-Clone the repository to outside the web root, e.g. `/var/www/`:
-
-```bash
-sudo git clone https://www.github.com/LycheeOrg/Lychee /var/www/
+<pre><code class="language-bash"># /var/lib/containers/storage/volumes/lychee-conf/_data/.env
+SKIP_DIAGNOSTICS_CHECKS=BasicPermissionCheck
+</code></pre>
+<h3 id="limitations-to-be-considered"><a class="toclink" href="#limitations-to-be-considered">Limitations to be considered</a></h3>
+<p>As explained before, recursive tasks are penalised in Object Storage, so if you have an existing bucket and the container runs for the first time, it will take long time to review and set the permissions in your mount. Depending on the number of photos, it can take several hours.</p>
+<h2 id="hosting-lychee-in-a-subpath-with-apache"><a class="toclink" href="#hosting-lychee-in-a-subpath-with-apache">Hosting Lychee in a subpath with Apache</a></h2>
+<p>To serve Lychee in a subpath, e.g. <code>https://my.url/photos/</code>, we can use Apaches's <a href="https://httpd.apache.org/docs/2.4/mod/mod_alias.html#alias">Alias</a>-directive.</p>
+<p>In this example we assume the web root to be located at <code>/var/www/html</code>, the web user and group to be <code>www-data</code>, and install <a href="installation.html#from-the-master-branch">from the master branch</a>.</p>
+<p>Before getting started, make sure your system qualifies the <a href="installation.html#server-requirements">Server Requirements</a>. </p>
+<h3 id="setup-lychee"><a class="toclink" href="#setup-lychee">Setup Lychee</a></h3>
+<p>Clone the repository to outside the web root, e.g. <code>/var/www/</code>:</p>
+<pre><code class="language-bash">sudo git clone https://www.github.com/LycheeOrg/Lychee /var/www/
 </code></pre>
 <p>Set the file ownership and permissions:</p>
 <pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/Lychee
 sudo chmod -R 2775 /var/www/Lychee
 </code></pre>
-<p>Install composer in <code>/var/www/Lychee</code> as instructed in <a href="https://getcomposer.org/download/">here</a>. Then, from <code>/var/www/Lychee</code>, install the project dependencies:</p>
+<p>Install composer in <code>/var/www/Lychee</code> as instructed in <a href="https://getcomposer.org/download/">here</a>.
+Then, from <code>/var/www/Lychee</code>, install the project dependencies:</p>
 <pre><code class="language-bash">sudo -u www-data php composer.phar install --no-dev
 </code></pre>
 <h3 id="setup-apache"><a class="toclink" href="#setup-apache">Setup Apache</a></h3>
-<p>Link <code>https://my.url/photos/</code> to <code>/var/www/Lychee/public</code> by adding the following to your Apache configuration for Aliases. In Apache 2.4 running on Debian, the correct configuration file is <code>/etc/apache2/mods-available/alias.conf</code>.</p>
+<p>Link <code>https://my.url/photos/</code> to <code>/var/www/Lychee/public</code> by adding the following to your Apache configuration for Aliases.
+In Apache 2.4 running on Debian, the correct configuration file is <code>/etc/apache2/mods-available/alias.conf</code>.</p>
 <pre><code class="language-apacheconf">Alias /photos /var/www/Lychee/public
 
 &lt;Directory /var/www/Lychee/public&gt;
@@ -379,7 +380,8 @@ sudo chmod -R 2775 /var/www/Lychee
 <pre><code class="language-bash">sudo service apache2 restart
 </code></pre>
 <h3 id="configure-lychee"><a class="toclink" href="#configure-lychee">Configure Lychee</a></h3>
-<p>At this point, you should be able to go to <code>https://my.url/photos/</code> and run the web installer. During the installation procedure, on top of adding the database credentials to match your setup, set your <code>APP_URL</code> to the served subdirectory:</p>
+<p>At this point, you should be able to go to <code>https://my.url/photos/</code> and run the web installer.
+During the installation procedure, on top of adding the database credentials to match your setup, set your <code>APP_URL</code> to the served subdirectory:</p>
 <pre><code class="language-bash">APP_URL=https://my.url/photos/
 </code></pre>
 <p>Done!</p>
