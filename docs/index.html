@@ -171,7 +171,7 @@
 <li>FFmpeg (to generate video thumbnails)</li>
 </ul>
 </li>
-<li>To install from git you will also need Composer. See <a href="#from-the-master-branch">below</a> for details.</li>
+<li>To install from git you will also need Composer and npm. See <a href="#from-the-master-branch">below</a> for details.</li>
 </ul>
 <p>While Lychee works on 32bit systems, we <strong>strongly</strong> recommend the use of a 64bit OS.</p>
 <h3 id="installing-lychee"><a class="toclink" href="#installing-lychee">Installing Lychee</a></h3>
@@ -182,7 +182,7 @@
 <p>Download the release zip-file from the <a href="https://github.com/LycheeOrg/Lychee/releases">Releases</a> page and extract it (usually in <code>/var/www/html</code>).
 It contains a trimmed down version of the Lychee files.</p>
 <h4 id="from-the-master-branch"><a class="toclink" href="#from-the-master-branch">From the Master branch</a></h4>
-<p>Lychee utilizes <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. Make sure you have Composer installed on your machine.</p>
+<p>Lychee utilizes <a href="https://getcomposer.org/">Composer</a> to manage its php dependencies and <a href="https://nodejs.org/">npm</a> for its front-end. Make sure you have both installed on your machine.</p>
 <pre><code class="language-bash">git clone https://www.github.com/LycheeOrg/Lychee /var/www/html/Lychee
 </code></pre>
 <p>Get into the directory:</p>
@@ -190,8 +190,10 @@ It contains a trimmed down version of the Lychee files.</p>
 </code></pre>
 <p>Install the required dependencies.</p>
 <pre><code class="language-bash">composer install --no-dev
+npm install
+npm run build
 </code></pre>
-<p>If you want to help develop Lychee, install the development dependencies by removing the <code>--no-dev</code> or replacing it with <code>--dev</code>.</p>
+<p>If you want to help develop Lychee, install the development dependencies by removing the <code>--no-dev</code> and use <code>npm run dev</code> to have change monitoring on the front-end.</p>
 <h3 id="configuration"><a class="toclink" href="#configuration">Configuration</a></h3>
 <h4 id="directory-permissions"><a class="toclink" href="#directory-permissions">Directory Permissions</a></h4>
 <p>Permissions of certain directories must be set correctly for Lychee to run.

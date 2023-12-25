@@ -107,6 +107,10 @@
                             <h1>Release Notes</h1>
                             
 <ul>
+<li><a href="#version-5">Version 5</a><ul>
+<li><a href="#v500">v5.0.0</a></li>
+</ul>
+</li>
 <li><a href="#version-4">Version 4</a><ul>
 <li><a href="#v4130">v4.13.0</a></li>
 <li><a href="#v4120">v4.12.0</a></li>
@@ -248,6 +252,131 @@
 }
 </style>
 
+<h2 id="version-5"><a class="toclink" href="#version-5">Version 5</a></h2>
+<h3 id="v500"><a class="toclink" href="#v500">v5.0.0</a></h3>
+<p>Released on Dec 25, 2023</p>
+<h4 id="breaking-change-in-build-steps"><a class="toclink" href="#breaking-change-in-build-steps">BREAKING CHANGE IN BUILD STEPS</a></h4>
+<p>If you are using <code>git clone</code>, you will need to use <code>npm</code> to build the front-end:</p>
+<ol>
+<li><code>composer install --no-dev</code></li>
+<li><code>php artisan migrate</code></li>
+<li><code>npm install</code></li>
+<li><code>npm run build</code></li>
+</ol>
+<p>Those files are however provided in the release zip file.</p>
+<h4 id="changes-from-v4130"><a class="toclink" href="#changes-from-v4130">Changes from v4.13.0</a></h4>
+<ul>
+<li><code>new</code> #2031 : improved honeypot logic &amp; add more honey by @ildyria.</li>
+<li><code>new</code> #2033 : map providers are now specified in an Enum by @ildyria.</li>
+<li><code>fixes</code> #2041 : Delete existing user permissions associated by @ildyria.</li>
+<li><code>new</code> #2066 : Add optimize database call by @ildyria.</li>
+<li><code>fixes</code> #2069 : Adds missing space separator in Ghostbuster command advice by @HorlogeSkynet.</li>
+<li><code>new</code> #2071 : Drops support for singular public photos in search. by @ildyria.</li>
+<li><code>new</code> #2060 : Bye bye PHP 8.1, long live PHP 8.2 by @ildyria.</li>
+<li><code>new</code> #2072 : Add configuration check between int and positive (&gt;0) by @ildyria.</li>
+</ul>
+<h4 id="changes-included-in-the-new-front-end"><a class="toclink" href="#changes-included-in-the-new-front-end">Changes included in the new Front-end</a></h4>
+<ul>
+<li><code>fixes</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/199">&#x266F;199</a> : Depreciated dependencies cries for a new frontend. #199<blockquote>
+<p>Complete rewrite of the front-end using latest technologies. Moving to a TALL stack: Tailwind, Alpinejs, Livewire, Laravel.</p>
+</blockquote>
+</li>
+<li><code>new</code> #12 : Shared albums: policy<blockquote>
+<p>Complete new implementation of sharing and access rights.</p>
+</blockquote>
+</li>
+<li><code>new</code> #383 : Allow other users to upload to shared albums<blockquote>
+<p>See #12</p>
+</blockquote>
+</li>
+<li><code>new</code> #725 : Login on direct album url if not logged in and album needs it<blockquote>
+<p>Proper implementation with the new frontend</p>
+</blockquote>
+</li>
+<li><code>new</code> #748 : UI/UX: give more information about the capabilities given to new users in the users page</li>
+<li><code>fixes</code> #828 : Album name not correct displayed in confirmation popup when moving a newly created album</li>
+<li><code>new</code> #857 : Support for very large uploads by chunking</li>
+<li><code>fixes</code> #1053 : Public album is not and can not be configured to be public #1053<blockquote>
+<p><strong>BREAKING CHANGE</strong>: The <em>public</em> smart album has been removed. Pictures are no longer made public singular.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1211 : Date/Time display options<blockquote>
+<p>Date/Time format are now configurable in the settings per location (sidebar, panel etc.)</p>
+</blockquote>
+</li>
+<li><code>new</code> #1249 : header text for the gallery<blockquote>
+<p>Description of each album is directly readable at the top and support markdown.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1189 : Multiline descriptions with markdown support for images and albums<blockquote>
+<p>Similar functionalities have been added for pictures too.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1253 : Change album's Top Right menu behavior when selecting some pictures<blockquote>
+<p>Top right action menu behaviour has enhanced to increase visibility and intent in the album view.
+It now depends of the selected elements.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1462 : Access Rights management: Users and Albums<blockquote>
+<p>Major refactoring the access rights, user can now give read, upload, edit, delete access to others.</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #1676 : Unable to open sidebar, can't navigate away from log/diagnostic/setting page</li>
+<li><code>new</code> #1704 : Add real links to albums<blockquote>
+<p>No longer use fragments, as a results links are properly clickable.</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #1720 : Download button is visible and does not support download rights yet.</li>
+<li><code>fixes</code> #1732 : Consistent URLs when Landing Page is disabled.<blockquote>
+<p>url have been made consisten accross the board.</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #1744 : UX broken on version 4.7.0 for Safari iPhone<blockquote>
+<p>New front-end will need more testing.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1825 : Change accent color<blockquote>
+<p>With the use of tailwindcss this is now easier to produce.</p>
+</blockquote>
+</li>
+<li><code>new</code> #1891 : Login popup appears if no albums created</li>
+<li><code>fixes</code> #1948 : Internal server error on photo upload (permissions?)<blockquote>
+<p>No longer applicable due to new front-end</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #1973 : The CSS tweaks to disable auto zoom in/out no longer work #1973<blockquote>
+<p>No longer applicable due to new front-end</p>
+</blockquote>
+</li>
+<li><code>new</code> #1989 : Add search / filter for 'Move' destination album list</li>
+<li><code>new</code> #2011 : Album Delete Confirmation<blockquote>
+<p>deletion is now hidden in a danger zone.</p>
+</blockquote>
+</li>
+<li><code>fixes</code> #2050 : When trying to open a password protected shared album, no password prompt is shown</li>
+<li><code>fixes</code> #2051 : Photo Download not work - UnauthorizedException </li>
+<li><code>fixes</code> #2058 : Insufficient privilieges when opening the "Share album" dialog as a regular user</li>
+<li><code>fixes</code> #2068 : Album allow public upload but disallow deletion<blockquote>
+<p>Part of this is now available, user can give upload access to other users while preventing deletion.
+    The public part is not taken in consideration as this is too much of a security risk.</p>
+</blockquote>
+</li>
+<li><code>new</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/104">&#x266F;104</a> : Rework Sharing Dialog in Settings<blockquote>
+<p>Sharing page only provide an overview, sharing is now done at the album level.</p>
+</blockquote>
+</li>
+<li><code>new</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/166">&#x266F;166</a> : Add album description between the header and the pictures</li>
+<li><code>new</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/268">&#x266F;268</a> : Css is too complex to permit anyone to create new theme<blockquote>
+<p>We now use tailwindcss, which makes it easier to create a unified theme.</p>
+</blockquote>
+</li>
+<li><code>new</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/312">&#x266F;312</a> : Make login dialog more prominent, auto-show login dialog if necessary, hide empty smart folders for anonymous users</li>
+<li><code>fixes</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/343">&#x266F;343</a> : Use proper URL instead of # fragments.</li>
+<li><code>fixes</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/344">&#x266F;344</a> : a are now correct links/interactive</li>
+<li><code>fixes</code> <a href="https://github.com/LycheeOrg/Lychee-front/issues/373">&#x266F;373</a> : Left menu is now working correctly</li>
+<li><code>new</code> #2078 : Diagnostics: Info are displayed in blue by @ildyria</li>
+<li><code>new</code> #2079 : Add option for thumbs overlay: none|hidden|always by @ildyria</li>
+</ul>
 <h2 id="version-4"><a class="toclink" href="#version-4">Version 4</a></h2>
 <h3 id="v4130"><a class="toclink" href="#v4130">v4.13.0</a></h3>
 <p>Released on Sep 24, 2023</p>
