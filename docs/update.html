@@ -128,10 +128,14 @@
 <p>Fully updating Lychee with <code>git</code> is the easiest way:</p>
 <pre><code class="language-bash"># download the lastest files
 git pull
-# update the dependencies
+# update composer dependencies
 composer install --no-dev
 # apply the database migration
 php artisan migrate
+# update Node.js dependencies
+npm install
+# generate frontend assets
+npm run build
 </code></pre>
 <p>If you have the <code>post-merge</code> hook set up the following is enough:</p>
 <pre><code class="language-bash">git pull
