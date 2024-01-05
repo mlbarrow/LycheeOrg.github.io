@@ -114,7 +114,6 @@
 <li><a href="#joining-the-team">Joining the Team</a></li>
 <li><a href="#how-to-properly-submit-a-pull-request-to-lychee">How to properly submit a pull-request to Lychee?</a><ul>
 <li><a href="#which-branch-to-use">Which Branch to use?</a></li>
-<li><a href="#back-end-and-front-end">Back-end and Front-end</a></li>
 <li><a href="#our-coding-style">Our Coding Style</a></li>
 <li><a href="#phpdoc">PHPDoc</a></li>
 <li><a href="#illustrated-example">Illustrated example</a></li>
@@ -177,18 +176,6 @@ git commit -m &quot;&lt;mesage-of-what-is-going-on&gt;&quot;
 git push -u
 </code></pre>
 <p>You can then open a <a href="https://github.com/LycheeOrg/Lychee/pulls">pull request</a>.</p>
-<h3 id="back-end-and-front-end"><a class="toclink" href="#back-end-and-front-end">Back-end and Front-end</a></h3>
-<p>As you may have noticed already, we have two repositories to manage separately: the front-end and the back-end.
-This was necessary at times to ensure the parallel development of Lychee version 4 and Lychee version 3.
-As a result, the process of submitting a PR that modifies both sides (Lychee-front and Lychee) goes as follows:</p>
-<ol>
-<li>we take the 2 PR.</li>
-<li>we review them both.</li>
-<li>we merge on Lychee-front.</li>
-<li>switch Lychee-front to master, rebuild &amp; commit on the Lychee PR.</li>
-<li>merge to Lychee master</li>
-<li>Enjoy!</li>
-</ol>
 <h3 id="our-coding-style"><a class="toclink" href="#our-coding-style">Our Coding Style</a></h3>
 <p>In order to ease the review of pull requests, we use a uniform code style. Our Continuous Integration suite will 
 fail if the latter is not respected.</p>
@@ -203,7 +190,7 @@ make formatting
 <p>In order to make this less constraining, you can copy the <code>pre-commit</code> file in the root into the <code>.git/hooks</code> folder. This will execute the fixer to maintain consistency.</p>
 <p>Our current configuration can be found <a href="https://github.com/LycheeOrg/Lychee/blob/master/.php_cs">here</a>.
 For details about the options, you can have a look at the <a href="https://mlocati.github.io/php-cs-fixer-configurator">php-cs-fixer-configurator</a></p>
-<h4 id="javascript"><a class="toclink" href="#javascript">Javascript</a></h4>
+<h4 id="javascripttypescript"><a class="toclink" href="#javascripttypescript">Javascript/TypeScript</a></h4>
 <p>Similarly to what was described above, you can format the code automatically with:</p>
 <pre><code class="language-bash">npm run format
 </code></pre>
