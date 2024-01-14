@@ -206,7 +206,7 @@ Note that there are up to three OS users which need to be taken into considerati
    For example, Apache executes the PHP interpreter as part of its own process if the extension <code>mod_php</code> is used.
    In case PHP FPM is used, for most distributions PHP FPM or CGI ships with a sensible default configuration which ensures that the PHP user is the same as the Web user.
    In both cases the PHP user is not of concern.
-   However, we are at least aware of one exception to this rule for Nginx on Fedora, see <a href="https://lycheeorg.github.io/docs/faq.html#i-know-my-file-permissions-for-storage-bootstrapcache-publicuploads-and-publicdist-are-correct-and-accessible-by-my-web-server-user-but-im-still-getting-a-php-error-when-writing-to-any-of-these-directories">FAQ</a></li>
+   However, we are at least aware of one exception to this rule for Nginx on Fedora, see <a href="https://lycheeorg.github.io/docs/faq_troubleshooting.html#i-know-my-file-permissions-for-storage-bootstrapcache-publicuploads-and-publicdist-are-correct-and-accessible-by-my-web-server-user-but-im-still-getting-a-php-error-when-writing-to-any-of-these-directories">FAQ</a></li>
 <li>The user which you use for shell logins and to run scripts; called the <strong>CLI user</strong> in the following.
    This user may be of particular concern, if you are planning to upload photos via the web interface <em>and</em> import photos via the shell scripts.</li>
 </ul>
@@ -272,7 +272,7 @@ RewriteRule ^ index.php [L]
 </code></pre>
 <h3 id="nginx"><a class="toclink" href="#nginx">nginx</a></h3>
 <p>This is a sample nginx server block. It does not include TLS, but covers the Lychee-specific requirements.
-If you would like to serve from a subdirectory, take a look at <a href="https://lycheeorg.github.io/docs/faq.html#can-i-host-lychee-with-a-subpath-with-nginx-like-httpsexampledevlychee">the FAQ</a>.</p>
+If you would like to serve from a subdirectory, take a look at <a href="https://lycheeorg.github.io/docs/faq_installation.html#can-i-host-lychee-with-a-subpath-with-nginx-like-httpsexampledevlychee">the FAQ</a>.</p>
 <pre><code class="language-nginx">server {
     listen 80;
     server_name &lt;mydomain&gt;.&lt;tld&gt;;
