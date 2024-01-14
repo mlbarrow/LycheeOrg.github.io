@@ -132,7 +132,7 @@
 <li>Lychee's inbuilt SQLite3 support</li>
 </ul>
 </li>
-<li>PHP &gt;= 8.1 with these PHP extensions:<ul>
+<li>PHP &gt;= 8.2 with these PHP extensions:<ul>
 <li>bcmath</li>
 <li>ctype</li>
 <li>dom</li>
@@ -251,7 +251,7 @@ This setting must match the configuration of your web server (see below).</p>
 <h2 id="web-server-configuration"><a class="toclink" href="#web-server-configuration">Web Server Configuration</a></h2>
 <h3 id="general"><a class="toclink" href="#general">General</a></h3>
 <p>Configure your web server to make the <code>public</code> directory accessible via a URL. This could be the root of your web server (short and convenient) or, if you prefer, a subpath such as <code>photos</code>. The <code>index.php</code> in this directory serves as the interface for all HTTP requests to Lychee's API.
-The configuration option <code>APP_URL</code> of Lychee must be set accordingly (see above).</p>
+The configuration option <code>APP_URL</code> of Lychee must be set accordingly (see <a href="configuration.html#base-options">configuration</a>).</p>
 <blockquote>
 <p>{note} Do not expose the top level directory of Lychee with your web server! This would allow public access to internal files like the application code and the <code>.env</code> file which contains sensitive information like the database credentials!</p>
 </blockquote>
@@ -296,7 +296,7 @@ If you would like to serve from a subdirectory, take a look at <a href="https://
         fastcgi_param HTTP_PROXY &quot;&quot;;
 
         ######### Make sure this is the correct socket for your system
-        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.2-fpm.sock;
         fastcgi_index index.php;
         ######## You may need to replace $document_root with the absolute path to your public folder.
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;

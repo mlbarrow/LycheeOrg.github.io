@@ -111,6 +111,7 @@
 <li><a href="#the-app-directory">The App Directory</a></li>
 <li><a href="#the-bootstrap-directory">The Bootstrap Directory</a></li>
 <li><a href="#the-config-directory">The Config Directory</a></li>
+<li><a href="#the-lang-directory">The Lang Directory</a></li>
 <li><a href="#the-database-directory">The Database Directory</a></li>
 <li><a href="#the-public-directory">The Public Directory</a></li>
 <li><a href="#the-resources-directory">The Resources Directory</a></li>
@@ -126,11 +127,14 @@
 <li><a href="#the-exceptions-directory">The Exceptions Directory</a></li>
 <li><a href="#the-http-directory">The Http Directory</a></li>
 <li><a href="#the-image-directory">The Image Directory</a></li>
-<li><a href="#the-locale-directory">The Locale Directory</a></li>
+<li><a href="#the-livewire-directory">The Livewire Directory</a></li>
 <li><a href="#the-metadata-directory">The Metadata Directory</a></li>
 <li><a href="#the-modelfunctions-directory">The ModelFunctions Directory</a></li>
+<li><a href="#the-policies-directory">The Policies Directory</a></li>
 <li><a href="#the-providers-directory">The Providers Directory</a></li>
+<li><a href="#the-relation-directory">The Relation Directory</a></li>
 <li><a href="#the-redirection-directory">The Redirection Directory</a></li>
+<li><a href="#the-rules-directory">The Rules Directory</a></li>
 </ul>
 </li>
 </ul>
@@ -145,26 +149,18 @@ For this reason, we choose to place Eloquent models in the app directory by defa
 <p>The <code>bootstrap</code> directory contains the <code>app.php</code> file which bootstraps Lychee. This directory also houses a <code>cache</code> directory which contains framework generated files for performance optimization such as the route and services cache files.</p>
 <h3 id="the-config-directory"><a class="toclink" href="#the-config-directory">The Config Directory</a></h3>
 <p>The <code>config</code> directory, as the name implies, contains all of Lychee's configuration files. It's a great idea to read through all of these files and familiarize yourself with all of the options available to you.</p>
+<h3 id="the-lang-directory"><a class="toclink" href="#the-lang-directory">The Lang Directory</a></h3>
+<p>The <code>lang</code> directory contains your language localization. If you wish, you can update our translations and submit a pull request.</p>
 <h3 id="the-database-directory"><a class="toclink" href="#the-database-directory">The Database Directory</a></h3>
 <p>The <code>database</code> directory contains your database migrations, model factories, and seeds. If you wish, you may also use this directory to hold an SQLite database.</p>
 <h3 id="the-public-directory"><a class="toclink" href="#the-public-directory">The Public Directory</a></h3>
-<p>The <code>public</code> directory contains the <code>index.php</code> file, which is the entry point for all requests entering Lychee and configures autoloading.</p>
-<!-- This directory also houses your assets such as images, JavaScript, and CSS. -->
-
+<p>The <code>public</code> directory contains the <code>index.php</code> file, which is the entry point for all requests entering Lychee and configures autoloading.
+This directory also houses your assets such as images, JavaScript, and CSS.</p>
 <h3 id="the-resources-directory"><a class="toclink" href="#the-resources-directory">The Resources Directory</a></h3>
-<p>The <code>resources</code> directory contains your views.
- <!-- as well as your raw, un-compiled assets such as LESS, SASS, or JavaScript. This directory also houses all of your language files. -->
-</p>
+<p>The <code>resources</code> directory contains your views as well as the TypeScript and CSS for the front-end.</p>
 <h3 id="the-routes-directory"><a class="toclink" href="#the-routes-directory">The Routes Directory</a></h3>
-<p>The <code>routes</code> directory contains all of the route definitions for Lychee. Several route files are included with Lychee: <code>admin.php</code>, <code>web.php</code>, <code>api.php</code>, <code>console.php</code> and <code>channels.php</code>. We only use the first two.</p>
-<p>The <code>web.php</code> file contains routes that the <code>RouteServiceProvider</code> places in the <code>web</code> middleware group, which provides session state, CSRF protection, and cookie encryption.</p>
-<p>The <code>admin.php</code> file contains routes with the same requirement as in <code>web.php</code> while adding an admin middleware to protect them.</p>
-<!-- The `api.php` file contains routes that the RouteServiceProvider places in the api middleware group, which provides rate limiting. These routes are intended to be stateless, so requests entering the application through these routes are intended to be authenticated via tokens and will not have access to session state. -->
-
-<!-- The `console.php` file is where you may define all of your Closure based console commands. Each Closure is bound to a command instance allowing a simple approach to interacting with each command's IO methods. Even though this file does not define HTTP routes, it defines console based entry points (routes) into your application. -->
-
-<!-- The `channels.php` file is where you may register all of the event broadcasting channels that your application supports. -->
-
+<p>The <code>routes</code> directory contains all of the route definitions for Lychee. Several route files are included with Lychee:
+<code>api.php</code>, <code>web-admin.php</code>, <code>web-install.php</code>, <code>web-livewire.php</code>, and <code>web.php</code>.</p>
 <h3 id="the-storage-directory"><a class="toclink" href="#the-storage-directory">The Storage Directory</a></h3>
 <p>The <code>storage</code> directory contains your compiled Blade templates, file based sessions, file caches, and other files generated by the framework. This directory is segregated into <code>app</code>, <code>framework</code>, and <code>logs</code> directories. The <code>app</code> directory may be used to store any files generated by your application. The <code>framework</code> directory is used to store framework generated files and caches. Finally, the <code>logs</code> directory contains Laravel's log files (useful in case of hard crash).</p>
 <!-- The `storage/app/public` directory may be used to store user-generated files, such as profile avatars, that should be publicly accessible. You should create a symbolic link at `public/storage` which points to this directory. You may create the link using the `php artisan storage:link` command. -->
@@ -181,14 +177,7 @@ For this reason, we choose to place Eloquent models in the app directory by defa
 </blockquote>
 <h2 id="the-app-directory_1"><a class="toclink" href="#the-app-directory_1">The App Directory</a></h2>
 <p>The majority of Lychee is housed in the <code>app</code> directory. By default, this directory is namespaced under <code>App</code> and is autoloaded by Composer using the <a href="https://www.php-fig.org/psr/psr-4/">PSR-4 autoloading standard</a>.</p>
-<p>The <code>app</code> directory contains a variety of additional directories such as <code>Console</code>, <code>Http</code>, and <code>Providers</code>. Think of the <code>Console</code> and <code>Http</code> directories as providing an API into the core of your application. The HTTP protocol and CLI are both mechanisms to interact with Lychee, but do not actually contain application logic. In other words, they are two ways of issuing commands to Lychee. The <code>Console</code> directory contains all of the Artisan commands, while the <code>Http</code> directory contains your controllers, middleware, and requests.</p>
-<!-- A variety of other directories will be generated inside the app directory as you use the make Artisan commands to generate classes. So, for example, the app/Jobs directory will not exist until you execute the make:job Artisan command to generate a job class. -->
-
-<!-- Many of the classes in the app directory can be generated by Artisan via commands. To review the available commands, run the php artisan list make command in your terminal. -->
-
-<!-- The Broadcasting Directory
-The Broadcasting directory contains all of the broadcast channel classes for your application. These classes are generated using the make:channel command. This directory does not exist by default, but will be created for you when you create your first channel. To learn more about channels, check out the documentation on event broadcasting. -->
-
+<p>The <code>app</code> directory contains a variety of additional directories such as <code>Console</code>, <code>Http</code>, <code>Livewire</code> and <code>Providers</code>. Think of the <code>Console</code>, <code>Livewire</code>, and <code>Http</code> directories as providing an API into the core of your application. The HTTP protocol and CLI are both mechanisms to interact with Lychee, but do not actually contain application logic. In other words, they are two ways of issuing commands to Lychee. The <code>Console</code> directory contains all of the Artisan commands, while the <code>Http</code> directory contains your controllers, middleware, and requests. Furthermore the <code>Livewire</code> directory contains the serverside code necessary for the new front-end.</p>
 <h3 id="the-console-directory"><a class="toclink" href="#the-console-directory">The Console Directory</a></h3>
 <p>The <code>Console</code> directory contains all of the custom Artisan commands for Lychee. These commands may be generated using the <code>make:command</code> command.</p>
 <!-- This directory also houses your console kernel, which is where your custom Artisan commands are registered and your scheduled tasks are defined. -->
@@ -209,8 +198,8 @@ This directory does not exist by default, but will be created for you by the eve
 <li>with GD,</li>
 <li>with imagick.</li>
 </ul>
-<h3 id="the-locale-directory"><a class="toclink" href="#the-locale-directory">The Locale Directory</a></h3>
-<p>The <code>Locale</code> directory contains at the moment all the translations strings for Lychee. This inhouse solution needs to be refactored to follow a better design.</p>
+<h3 id="the-livewire-directory"><a class="toclink" href="#the-livewire-directory">The Livewire Directory</a></h3>
+<p>The <code>Livewire</code> directory contains the server-side logic for the Livewire front-end. See more <a href="livewire.html">here</a></p>
 <h3 id="the-metadata-directory"><a class="toclink" href="#the-metadata-directory">The Metadata Directory</a></h3>
 <p>The <code>Metatdata</code> directory contains logic related to data such as Exif information, geodecoding, lychee version, GitHub monitoring...</p>
 <h3 id="the-modelfunctions-directory"><a class="toclink" href="#the-modelfunctions-directory">The ModelFunctions Directory</a></h3>
@@ -227,15 +216,16 @@ This directory does not exist by default, but will be created for you if you exe
 <!-- The Notifications Directory
 This directory does not exist by default, but will be created for you if you execute the make:notification Artisan command. The Notifications directory contains all of the "transactional" notifications that are sent by your application, such as simple notifications about events that happen within your application. Laravel's notification features abstracts sending notifications over a variety of drivers such as email, Slack, SMS, or stored in a database. -->
 
-<!-- The Policies Directory
-This directory does not exist by default, but will be created for you if you execute the make:policy Artisan command. The Policies directory contains the authorization policy classes for your application. Policies are used to determine if a user can perform a given action against a resource. For more information, check out the authorization documentation. -->
-
+<h3 id="the-policies-directory"><a class="toclink" href="#the-policies-directory">The Policies Directory</a></h3>
+<p>The <code>Policies</code> directory contains the authorization policy classes for your application. Policies are used to determine if a user can perform a given action against a resource.</p>
 <h3 id="the-providers-directory"><a class="toclink" href="#the-providers-directory">The Providers Directory</a></h3>
 <p>The <code>Providers</code> directory contains all of the <a href="https://laravel.com/docs/7.x/providers">service providers</a> for Lychee. Service providers bootstrap Lychee by binding services in the service container, registering events, or performing any other tasks to prepare your application for incoming requests.</p>
+<h3 id="the-relation-directory"><a class="toclink" href="#the-relation-directory">The Relation Directory</a></h3>
+<p>The <code>Relation</code> directory contains the handcrafted relationships used by Lychee between models. Those house some of the most complex part of Lychee.</p>
 <h3 id="the-redirection-directory"><a class="toclink" href="#the-redirection-directory">The Redirection Directory</a></h3>
 <p>The <code>Redirection</code> directory houses main redirection to handle the installation (database not set) and safety cases (security key not set).</p>
-<!-- The Rules Directory
-This directory does not exist by default, but will be created for you if you execute the make:rule Artisan command. The Rules directory contains the custom validation rule objects for your application. Rules are used to encapsulate complicated validation logic in a simple object. For more information, check out the validation documentation. --><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/structure.md">Edit this page on Github!</a></p></blockquote>
+<h3 id="the-rules-directory"><a class="toclink" href="#the-rules-directory">The Rules Directory</a></h3>
+<p>The <code>Rules</code> directory contains the custom validation rule objects for your application. Rules are used to encapsulate complicated validation logic in a simple object.</p><blockquote><p>{tip} Caught a mistake or want to contribute to the documentation?&nbsp;<a href="https://github.com/LycheeOrg/LycheeOrg.github.io/tree/master/docs/structure.md">Edit this page on Github!</a></p></blockquote>
                         </section>
                     </section>
                 </section>

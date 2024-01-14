@@ -156,8 +156,13 @@ For non-core options (for example UI options), take a look at <a href="https://l
 </tr>
 <tr>
 <td><code>APP_URL</code></td>
-<td>The URL of your gallery (which resolves to the <code>public/</code> folder)</td>
+<td>The hostname of your gallery (which should resolves to the <code>public/</code> folder).</td>
 <td><code>http://localhost</code></td>
+</tr>
+<tr>
+<td><code>APP_DIR</code></td>
+<td>The subfolder path part of the URL.</td>
+<td><em>empty</em></td>
 </tr>
 <tr>
 <td><code>APP_KEY</code></td>
@@ -166,7 +171,7 @@ For non-core options (for example UI options), take a look at <a href="https://l
 </tr>
 <tr>
 <td><code>TIMEZONE</code></td>
-<td>The timezone of your photos, requires a named timezone identifier like <code>Europe/Paris</code>, don't use an offset (<code>+01:00</code>) or an abbreviation (<code>CEST</code>)</td>
+<td>The timezone of your photos., requires a named timezone identifier like <code>Europe/Paris</code></td>
 <td>system timezone of server</td>
 </tr>
 <tr>
@@ -176,16 +181,35 @@ For non-core options (for example UI options), take a look at <a href="https://l
 </tr>
 <tr>
 <td><code>LYCHEE_UPLOADS_URL</code></td>
-<td>URL to uploads directory</td>
-<td><code>uploads/</code></td>
+<td>URL to uploads directory, better left empty</td>
+<td><code>/uploads</code></td>
 </tr>
 <tr>
 <td><code>TRUSTED_PROXIES</code></td>
 <td>Trusted proxy IP addresses</td>
 <td><code>null</code></td>
 </tr>
+<tr>
+<td><code>LOG_VIEWER_ENABLED</code></td>
+<td>Enable log viewer inside Lychee instead of through CLI.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>LIVEWIRE_ENABLED</code></td>
+<td>Enable v5 Livewire frontend; set to <code>false</code> if the new frontend doesn't work on our installation (this is a <strong>temporary</strong> workaround).</td>
+<td><code>true</code></td>
+</tr>
 </tbody>
 </table>
+<blockquote>
+<p>{note} <code>APP_URL</code> must only contain the hostname up to the Top Level Domain (tld) <em>e.g.</em> .com, .org etc.
+If you are using Lychee in a sub folder, specify the path after the tld here in the <code>APP_DIR</code> constant.<br />
+For example for <code>https://lychee.test/path/to/lychee</code>:<br />
+- set <code>APP_URL</code> to <code>https://lychee.test</code><br />
+- and set <code>APP_DIR</code> to <code>/path/to/lychee</code><br />
+We (LycheeOrg) do not recommend the use of APP_DIR.</p>
+<p>{tip} For <code>TIMEZONE</code>, do not use an offset (<code>+01:00</code>) or an abbreviation (<code>CEST</code>)</p>
+</blockquote>
 <h3 id="database-options"><a class="toclink" href="#database-options">Database options</a></h3>
 <p>Lychee supports MySQL/MariaDB, SQLite and PostgreSQL as database backends. Microsoft SQL Server can be used, but is unsupported. The configuration is managed using the <code>DB_</code> variables.</p>
 <h4 id="database_url"><a class="toclink" href="#database_url"><code>DATABASE_URL</code></a></h4>
@@ -483,16 +507,19 @@ DATABASE_URL=&quot;mysql://root:password@127.0.0.1/forge?charset=UTF-8&quot;
 <tr>
 <th>Option</th>
 <th>Description</th>
+<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>DYNAMODB_CACHE_TABLE</code></td>
 <td>Cache table name</td>
+<td><code>cache</code></td>
 </tr>
 <tr>
 <td><code>DYNAMODB_ENDPOINT</code></td>
 <td>DynamoDB endpoint</td>
+<td><code>null</code></td>
 </tr>
 </tbody>
 </table>
@@ -606,20 +633,24 @@ DATABASE_URL=&quot;mysql://root:password@127.0.0.1/forge?charset=UTF-8&quot;
 <tr>
 <th>Name</th>
 <th>Description</th>
+<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>SESSION_LIFETIME</code></td>
-<td>Idle session expiration in minutes; the session will need to be reinitialized once it has expired (default 120)</td>
+<td>Idle session expiration in minutes; the session will need to be reinitialized once it has expired.</td>
+<td>120</td>
 </tr>
 <tr>
 <td><code>SESSION_SECURE_COOKIE</code></td>
 <td>Cookies only via HTTPS</td>
+<td><code>false</code></td>
 </tr>
 <tr>
 <td><code>SECURITY_HEADER_HSTS_ENABLE</code></td>
 <td>Enable HTTP strict transport security</td>
+<td><code>false</code></td>
 </tr>
 </tbody>
 </table>
@@ -694,28 +725,34 @@ DATABASE_URL=&quot;mysql://root:password@127.0.0.1/forge?charset=UTF-8&quot;
 <tr>
 <th>Option</th>
 <th>Description</th>
+<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>APP_ENV</code></td>
 <td>Set to <code>development</code> to enable development environment</td>
+<td><code>prod</code></td>
 </tr>
 <tr>
 <td><code>APP_DEBUG</code></td>
 <td>Enable debug mode</td>
+<td><code>false</code></td>
 </tr>
 <tr>
 <td><code>DEBUGBAR_ENABLED</code></td>
 <td>Enable debugbar</td>
+<td><code>false</code></td>
 </tr>
 <tr>
 <td><code>DB_LOG_SQL</code></td>
-<td>Log SQL statements, find the log file under <code>storage/logs/laravel.log</code></td>
+<td>Log SQL statements, see your Logs within Lychee.</td>
+<td><code>false</code></td>
 </tr>
 <tr>
-<td><code>LIVEWIRE_ENABLED</code></td>
-<td>Enable experimental Livewire frontend</td>
+<td><code>DB_LOG_SQL_EXPLAIN</code></td>
+<td>Explain the SQL statements for MySQL.</td>
+<td><code>false</code></td>
 </tr>
 </tbody>
 </table>
@@ -730,17 +767,17 @@ DATABASE_URL=&quot;mysql://root:password@127.0.0.1/forge?charset=UTF-8&quot;
 
 These options are unused right now, but may be used in the future.
 
-|Option|Description|
-|---|---|
-|`REDIS_DB`|Redis database, used for broadcasting and queue|
-|`REDIS_QUEUE`|Redis queue|
-|`BROADCAST_DRIVER`|Broadcast driver|
-|`QUEUE_DRIVER`|Queue driver|
-|`PUSHER_APP_ID|Pusher app ID|
-|`PUSHER_APP_KEY|Pusher app secret|
-|`PUSHER_APP_SECRET|Pusher app secret|
-|`PUSHER_APP_CLUSTER|Pusher app cluster|
-|`FILESYSTEM_CLOUD`|Cloud Filesystem|
+| Option               | Description                                     |
+|----------------------|-------------------------------------------------|
+| `REDIS_DB`           | Redis database, used for broadcasting and queue |
+| `REDIS_QUEUE`        | Redis queue                                     |
+| `BROADCAST_DRIVER`   | Broadcast driver                                |
+| `QUEUE_DRIVER`       | Queue driver                                    |
+| `PUSHER_APP_ID`      | Pusher app ID                                   |
+| `PUSHER_APP_KEY`     | Pusher app secret                               |
+| `PUSHER_APP_SECRET`  | Pusher app secret                               |
+| `PUSHER_APP_CLUSTER` | Pusher app cluster                              |
+| `FILESYSTEM_CLOUD`   | Cloud Filesystem                                |
 
 -->
 
@@ -796,7 +833,6 @@ These options are unused right now, but may be used in the future.
 </tr>
 </tbody>
 </table>
-
 <p>If you need to define an environment variable with a value that contains spaces, you may do so by enclosing the value in double quotes.</p>
 <pre><code class="language-ini">APP_NAME=&quot;My Application&quot;
 </code></pre>
