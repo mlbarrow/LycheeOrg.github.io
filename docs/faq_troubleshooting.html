@@ -112,6 +112,7 @@
 <li><a href="#i-have-an-error-404-and-im-using-apache-what-can-i-do">I have an error 404 and I'm using Apache, what can I do?</a></li>
 <li><a href="#i-have-an-error-404-and-im-using-nginx-what-can-i-do">I have an error 404 and I'm using Nginx, what can I do?</a></li>
 <li><a href="#i-have-an-error-404-and-im-using-php-s-what-can-i-do">I have an error 404 and I'm using php -S, what can I do?</a></li>
+<li><a href="#i-have-an-error-500-it-says-class-mockery-not-found-what-can-i-do">I have an error 500, it says 'Class "Mockery" not found', what can I do?</a></li>
 <li><a href="#i-have-an-error-500-what-can-i-do">I have an error 500, what can I do?</a></li>
 <li><a href="#i-have-an-errror-419-in-the-network-tab-what-is-going-on">I have an errror 419 in the Network tab, what is going on?</a></li>
 <li><a href="#i-cant-upload-large-photos">I can't upload (large) photos.</a></li>
@@ -144,6 +145,10 @@ This will ensure that the paths and routes are correctly followed.</p>
 <blockquote>
 <p>{note} Note that the <code>serve</code> command should only be used for testing and debuging. It should not be used on a production server.</p>
 </blockquote>
+<h3 id="i-have-an-error-500-it-says-class-mockery-not-found-what-can-i-do"><a class="toclink" href="#i-have-an-error-500-it-says-class-mockery-not-found-what-can-i-do">I have an error 500, it says 'Class "Mockery" not found', what can I do?</a></h3>
+<p>This is because your <code>APP_ENV</code> is set to <code>testing</code> and you are using production dependencies.
+Lychee is trying to mock the requests for test purposes.</p>
+<p>To resolve the issue, edit the <code>.env</code> file and set <code>APP_ENV</code> to something other than <code>testing</code>, for example <code>APP_ENV=production</code>.</p>
 <h3 id="i-have-an-error-500-what-can-i-do"><a class="toclink" href="#i-have-an-error-500-what-can-i-do">I have an error 500, what can I do?</a></h3>
 <p>Edit the <code>.env</code> file and set <code>APP_DEBUG</code> to <code>true</code>, this will allow the errors to be displayed with the trace.</p>
 <h3 id="i-have-an-errror-419-in-the-network-tab-what-is-going-on"><a class="toclink" href="#i-have-an-errror-419-in-the-network-tab-what-is-going-on">I have an errror 419 in the Network tab, what is going on?</a></h3>
