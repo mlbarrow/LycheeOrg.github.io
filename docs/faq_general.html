@@ -126,7 +126,6 @@
 <li><a href="#how-to-add-custom-scripts">How to add custom scripts?</a></li>
 <li><a href="#how-is-the-upload-folder-protected">How is the upload folder protected?</a></li>
 <li><a href="#my-login-is-timing-out-after-two-hours-how-can-this-be-changed">My login is timing out after two hours, how can this be changed?</a></li>
-<li><a href="#how-can-i-clear-the-logs">How can I clear the Logs?</a></li>
 <li><a href="#how-can-i-see-the-correct-client-ip-address-when-running-lychee-behind-cloudflare">How can I see the correct client IP address when running Lychee behind Cloudflare?</a></li>
 <li><a href="#can-i-set-up-lychee-to-watch-a-folder-for-new-images-and-automatically-add-them-to-albums">Can I set up Lychee to watch a folder for new images and automatically add them to albums?</a></li>
 <li><a href="#special-right-click-menu-doesnt-appear-for-new-users">Special right-click menu doesn't appear for new users?</a></li>
@@ -168,18 +167,7 @@ Note that <code>api_key</code> only disables the CSRF protection, you still need
 <h3 id="how-to-reset-username-and-password"><a class="toclink" href="#how-to-reset-username-and-password">How to reset username and password?</a></h3>
 <p>Via SSH, use the command <code>php artisan lychee:reset_admin</code>.</p>
 <h3 id="how-to-hide-smart-albums"><a class="toclink" href="#how-to-hide-smart-albums">How to hide smart albums?</a></h3>
-<p>Add the following custom CSS to your <code>user.css</code> or via the settings menu:</p>
-<pre><code class="language-css">[data-id=&quot;unsorted&quot;] { display:none; }
-[data-id=&quot;public&quot;] { display:none; }
-[data-id=&quot;starred&quot;] { display:none; }
-[data-id=&quot;recent&quot;] { display:none; }
-div#lychee_view_content &gt; div.divider:first-child { display:none; }
-div#lychee_view_content &gt; div.divider:nth-child(6) {
-    margin-top: 10px;
-    border-top: 0;
-    box-shadow: none;
-}
-</code></pre>
+<p>Go into your <em>Settings</em> then <em>More</em>, find <code>SA_enabled</code> in the <em>"Smart Albums"</em> section and set it to <code>0</code>.</p>
 <h3 id="how-to-disable-the-zoom-animation-while-browsing-pictures"><a class="toclink" href="#how-to-disable-the-zoom-animation-while-browsing-pictures">How to disable the 'zoom' animation while browsing pictures?</a></h3>
 <p>Add the following custom CSS to your <code>user.css</code> or via the settings menu:</p>
 <pre><code class="language-css">#imageview #image {
@@ -267,7 +255,7 @@ For example, let's assume you want use Google's Nunito font. Then the CSS has to
 </code></pre>
 <p>Change the URLs <code>https://fonts.googleapis.com</code> and <code>https://fonts.gstatic.com</code> to match your provider's URLs.</p>
 <h3 id="how-to-add-custom-scripts"><a class="toclink" href="#how-to-add-custom-scripts">How to add custom scripts?</a></h3>
-<p>If you want to add custom scripts, for example to add an analytics service, you can add the script code to the <code>additional_footer_text</code> setting. For example, adding <code>&lt;script&gt;alert('Hello World!');&lt;/script&gt;</code> to it will display an alert dialog with <code>Hello World!</code> in it every time you load the page.</p>
+<p>Edit the <code>custom.js</code> file in <code>/path/to/lychee/public/dist/</code> or use the <em>"Personalize JS"</em> area in <em>Settings</em>.</p>
 <h3 id="how-is-the-upload-folder-protected"><a class="toclink" href="#how-is-the-upload-folder-protected">How is the upload folder protected?</a></h3>
 <p>From <a href="https://github.com/LycheeOrg/Lychee/issues/304">#304</a></p>
 <p>Short version: It's not protected</p>
@@ -276,12 +264,6 @@ For example, let's assume you want use Google's Nunito font. Then the CSS has to
 <p><a href="https://github.com/ildyria">@ildyria</a> recently posted the following link on how a more effective protection could be implemented: https://bedigit.com/blog/laravel-5-how-to-access-image-uploaded-in-storage-within-view/. He didn't go down that route himself due to performance concerns but we agree that if somebody contributed a clean implementation as an option, we'd probably accept it.</p>
 <h3 id="my-login-is-timing-out-after-two-hours-how-can-this-be-changed"><a class="toclink" href="#my-login-is-timing-out-after-two-hours-how-can-this-be-changed">My login is timing out after two hours, how can this be changed?</a></h3>
 <p>You can edit your <code>.env</code> and modify the <code>SESSION_LIFETIME=120</code> part (in minutes).</p>
-<h3 id="how-can-i-clear-the-logs"><a class="toclink" href="#how-can-i-clear-the-logs">How can I clear the Logs?</a></h3>
-<p>To remove the <code>Notice</code> and <code>Warnings</code>, simply click on the button at the top of the Log page.
-However if the page is too heavy to load, you can either manually empty the <code>Logs</code> table or use artisan:</p>
-<pre><code class="language-bash">cd Lychee
-php artisan lychee:logs clean
-</code></pre>
 <h3 id="how-can-i-see-the-correct-client-ip-address-when-running-lychee-behind-cloudflare"><a class="toclink" href="#how-can-i-see-the-correct-client-ip-address-when-running-lychee-behind-cloudflare">How can I see the correct client IP address when running Lychee behind Cloudflare?</a></h3>
 <p>Please see <a href="https://github.com/monicahq/laravel-cloudflare">https://github.com/monicahq/laravel-cloudflare</a>. The Lychee file that needs changing can be found <a href="https://github.com/LycheeOrg/Lychee/blob/master/app/Http/Middleware/TrustProxies.php">here</a>.</p>
 <h3 id="can-i-set-up-lychee-to-watch-a-folder-for-new-images-and-automatically-add-them-to-albums"><a class="toclink" href="#can-i-set-up-lychee-to-watch-a-folder-for-new-images-and-automatically-add-them-to-albums">Can I set up Lychee to watch a folder for new images and automatically add them to albums?</a></h3>
@@ -295,10 +277,6 @@ man systemd.timer
 <img alt="" src="img/special-right-click-missing.png" /></p>
 <p>No this is normal. This user does not have the ownership of that Album, so the right click is not available. You can see <em>sharing</em> as a <em>read</em> permission.</p>
 <h3 id="the-divider-h1-shows-the-text-admin-when-logged-in-with-an-ordinary-user-shoulnt-this-be-albums"><a class="toclink" href="#the-divider-h1-shows-the-text-admin-when-logged-in-with-an-ordinary-user-shoulnt-this-be-albums">The divider h1 shows the text "Admin" when logged in with an ordinary user. Shouln't this be "Albums"?</a></h3>
-<!-- TODO add deprecation notice once https://github.com/LycheeOrg/Lychee/pull/1539 is merged
-> {note} This is a behavior of Lychee that only occurs if the admin user did not log in after the update. Please contact the admin to log in once. After this, the admin's username is shown instead of `Admin`.
--->
-
 <p>Actually no, this is because the user does not have any albums (yet). The <code>h1</code> divider is to show who is the owner of those albums. See below.
 <img alt="2020-02-19_3840x1080_12:29:19" src="https://user-images.githubusercontent.com/627094/74830496-92c3a200-5313-11ea-9065-60cb8090c7ac.png" />
 And yes the right-click menu is available on the <em>PhD Defenses</em> part but not in the <em>Admin</em> parts.
