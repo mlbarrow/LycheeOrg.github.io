@@ -125,10 +125,12 @@
 <ul>
 <li><code>latest</code>: Latest Lychee release</li>
 <li><code>v[NUMBER]</code>: Stable version tag for a Lychee release</li>
-<li><code>dev</code>: Current master branch tag (Lychee operates on a stable master, so this should usually be safe)</li>
+<li><code>nightly</code> (also <code>dev</code>): Current master branch tag (Lychee operates on a stable master, so this should usually be safe)</li>
+<li><code>devtools</code>: Same as <code>nightly</code>, but includes development dependencies (e.g. api docs, debug bar)</li>
+<li><code>alpha</code>: Current alpha branch tag (The alpha branch contains bleeding edge changes that are not peer-reviewed)</li>
+<li><code>alpha-devtools</code>: Same as <code>alpha</code>, but includes development dependencies  (e.g. api docs, debug bar)</li>
 <li><code>testing</code>: Tag for testing new branches and pull requests. Designed for internal use by LycheeOrg.</li>
 </ul>
-<p>Note that only the <code>:dev</code> tag is available for armv6 and armv7 systems. This is due to an issue with the build environment and is hopefully temporary.</p>
 <h2 id="setup"><a class="toclink" href="#setup">Setup</a></h2>
 <h3 id="quick-start"><a class="toclink" href="#quick-start">Quick Start</a></h3>
 <p>To use the built-in SQLite support, no external dependencies are required. At its simplest, <code>docker run -p 80 lycheeorg/lychee:dev</code> will start Lychee listening on a random port on the local host.</p>

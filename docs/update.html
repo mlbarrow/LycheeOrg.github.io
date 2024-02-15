@@ -109,6 +109,7 @@
 <ul>
 <li><a href="#update-requirements">Update requirements</a></li>
 <li><a href="#update-using-git">Update using Git</a></li>
+<li><a href="#using-docker-compose">Using Docker compose</a></li>
 <li><a href="#update-manually">Update manually</a></li>
 <li><a href="#update-via-the-gui">Update via the GUI</a></li>
 </ul>
@@ -140,6 +141,35 @@ npm run build
 <p>If you have the <code>post-merge</code> hook set up the following is enough:</p>
 <pre><code class="language-bash">git pull
 </code></pre>
+<h2 id="using-docker-compose"><a class="toclink" href="#using-docker-compose">Using Docker compose</a></h2>
+<p>There are two cases. Either you are pinned to a release tag, <em>e.g.</em> v5.1.2 or you are using a rolling update tag.</p>
+<blockquote>
+<p>{tip} When using docker, a version rollback is difficult to apply: it requires to bash into the container to run the required migrate commands on the new version before dropping the tag to the previous value.</p>
+</blockquote>
+<h4 id="with-rolling-update-tag"><a class="toclink" href="#with-rolling-update-tag">With Rolling update tag</a></h4>
+<p>This procedure is for those following one of those tags:</p>
+<ul>
+<li><code>latest</code> &mdash; the last official release</li>
+<li><code>nightly</code> or <code>dev</code> &mdash; the last build from the <code>master</code> branch (peer reviewed)</li>
+<li><code>alpha</code> &mdash; the last build from the <code>alpha</code> branch (no peer review)</li>
+</ul>
+<p>Simply run the following.</p>
+<pre><code class="language-bash">docker compose down
+docker compose pull
+docker compose up -d
+</code></pre>
+<p>The database migrations will be applied automatically.</p>
+<h4 id="with-version-tag"><a class="toclink" href="#with-version-tag">With version tag.</a></h4>
+<p>First edit your <code>docker-compose.yml</code> to point to the version you would like to migrate to.</p>
+<pre><code class="language-diff">-    image: lycheeorg/lychee:v5.1.0
++    image: lycheeorg/lychee:v5.1.2
+</code></pre>
+<p>Save and run the following.</p>
+<pre><code class="language-bash">docker compose down
+docker compose pull
+docker compose up -d
+</code></pre>
+<p>The migration will be applied automatically and you should be running the requested tagged version.</p>
 <h2 id="update-manually"><a class="toclink" href="#update-manually">Update manually</a></h2>
 <p>This update will be the one you have to use if you are following the Release channel.</p>
 <ol>
